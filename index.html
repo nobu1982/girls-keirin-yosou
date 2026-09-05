@@ -1514,21 +1514,17 @@
 
 
       /*
-       * 開催詳細画面を表示
-       *
-       * schedulePageを完全に隠し、
-       * detailPageを明示的に表示します。
+       * ここは元々正常に動いていた処理を維持します。
+       * トップ画面を含む .app を隠して、
+       * 開催詳細画面を表示します。
        */
 
-      document.getElementById("schedulePage").style.display = "none";
+      document.querySelector(".app").style.display = "none";
+
+      document.getElementById("schedulePage").classList.remove("active");
 
       document.getElementById("detailPage").classList.add("active");
-      document.getElementById("detailPage").style.display = "block";
 
-
-      /*
-       * 開催情報を表示
-       */
 
       document.getElementById("detailEventTitle").textContent =
         schedule.venueText;
@@ -1550,12 +1546,17 @@
     }
 
 
+    /*
+     * 開催詳細 → トップ
+     */
+
     function backToTop() {
 
       document.getElementById("detailPage").classList.remove("active");
-      document.getElementById("detailPage").style.display = "none";
 
-      document.getElementById("schedulePage").style.display = "none";
+      document.getElementById("schedulePage").classList.remove("active");
+
+      document.querySelector(".app").style.display = "block";
 
       document.getElementById("topPage").style.display = "block";
 
