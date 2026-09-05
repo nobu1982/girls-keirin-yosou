@@ -813,80 +813,128 @@
 
 .detail-page-header {
   width: 100%;
-  padding: 24px 20px 18px;
-  background: #ffffff;
-  border-bottom: 5px solid #d82c78;
+  padding: 22px 18px 16px;
+  background: linear-gradient(135deg, #d82c78, #e34886);
+  color: #ffffff;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .detail-page-header .main-title {
-  font-size: 28px;
+  font-size: 29px;
+  font-weight: 800;
+  line-height: 1.3;
 }
 
 .detail-page-header .sub-title {
-  font-size: 16px;
-  margin-top: 6px;
+  margin-top: 5px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .detail-content {
   width: 100%;
-  padding: 24px 18px 0;
+  padding: 20px 18px 0;
+  box-sizing: border-box;
 }
 
 .detail-event-title {
-  margin: 0 0 22px;
+  margin: 0;
   color: #111111;
   font-size: 25px;
   font-weight: 800;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 .detail-event-period {
-  margin-top: -14px;
-  margin-bottom: 24px;
-  color: #777777;
+  margin: 5px 0 22px;
+  color: #555555;
   font-size: 14px;
   line-height: 1.5;
 }
 
 .detail-section-title {
-  margin: 0 0 14px;
-  color: #111111;
-  font-size: 21px;
+  margin: 0 0 12px;
+  color: #d82c78;
+  font-size: 22px;
   font-weight: 800;
   line-height: 1.4;
 }
 
 .featured-box {
   width: 100%;
-  padding: 16px;
-  border: 2px solid #eeeeee;
-  border-radius: 18px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.featured-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.featured-card {
+  width: 100%;
+  min-height: 68px;
+  padding: 11px 16px;
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.07);
+  box-sizing: border-box;
+}
+
+.featured-rider-name {
+  color: #111111;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.featured-rider-comment {
+  margin-top: 3px;
+  color: #333333;
+  font-size: 14px;
+  line-height: 1.45;
+  word-break: break-word;
 }
 
 .featured-empty {
-  padding: 8px 2px;
-  color: #777777;
-  font-size: 14px;
-  line-height: 1.7;
-  text-align: center;
-}
-
-.prediction-section {
-  margin-top: 28px;
-}
-
-.prediction-empty {
   width: 100%;
-  padding: 22px 16px;
-  border-radius: 16px;
+  padding: 20px 10px;
+  border-radius: 12px;
   background: #fff2f7;
   color: #777777;
   font-size: 14px;
   line-height: 1.7;
   text-align: center;
+  box-sizing: border-box;
+}
+
+.prediction-section {
+  margin-top: 27px;
+}
+
+.prediction-section .detail-section-title {
+  margin-bottom: 12px;
+}
+
+.prediction-empty {
+  width: 100%;
+  padding: 22px 16px;
+  border-radius: 12px;
+  background: #fff2f7;
+  color: #777777;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .detail-back-button {
@@ -898,10 +946,11 @@
   border-radius: 20px;
   background: #ffffff;
   color: #d82c78;
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 800;
   cursor: pointer;
   appearance: none;
+  box-sizing: border-box;
 }
 
 .detail-back-button:active {
@@ -932,54 +981,6 @@
     margin-left: 14px;
     margin-right: 14px;
   }
-}
-
-
-/* ========================================
-   注目選手
-======================================== */
-
-.featured-box {
-  width: 100%;
-  padding: 14px;
-  border: 2px solid #eeeeee;
-  border-radius: 18px;
-  background: #ffffff;
-  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.06);
-  overflow-x: auto;
-  box-sizing: border-box;
-}
-
-.featured-list {
-  display: flex;
-  gap: 12px;
-  width: max-content;
-  min-width: 100%;
-}
-
-.featured-card {
-  width: 180px;
-  min-width: 180px;
-  padding: 14px 12px;
-  border-radius: 14px;
-  background: #fff2f7;
-  box-sizing: border-box;
-}
-
-.featured-rider-name {
-  color: #111111;
-  font-size: 18px;
-  font-weight: 800;
-  line-height: 1.4;
-  word-break: break-word;
-}
-
-.featured-rider-comment {
-  margin-top: 8px;
-  color: #666666;
-  font-size: 13px;
-  line-height: 1.65;
-  word-break: break-word;
 }
 
 </style>
@@ -1237,31 +1238,24 @@
   <section id="detailPage" class="detail-page">
 
     <header class="detail-page-header">
-      <div class="main-title">ガールズ競輪予想</div>
-      <div class="sub-title">DOKOTOクラブ立川</div>
+      <div class="main-title" id="detailHeaderTitle">開催情報</div>
+      <div class="sub-title" id="detailHeaderPeriod"></div>
     </header>
 
     <main class="detail-content">
-
-      <h1 id="detailEventTitle" class="detail-event-title">
-        開催情報
-      </h1>
-
-      <div id="detailEventPeriod" class="detail-event-period">
-      </div>
-
 
       <!-- 注目選手 -->
 
       <section>
 
         <h2 class="detail-section-title">
-          ⭐ 注目選手
+          ★ 今開催の注目選手
         </h2>
 
         <div class="featured-box">
 
-          <div id="featuredList" class="featured-list">
+          <div class="featured-empty">
+            注目選手の情報は次の工程で設定します。
           </div>
 
         </div>
@@ -1274,7 +1268,7 @@
       <section class="prediction-section">
 
         <h2 class="detail-section-title">
-          当日予想一覧
+          📅 当日予想一覧
         </h2>
 
         <div class="prediction-empty">
@@ -1409,9 +1403,6 @@
               );
 
             }
-
-            window.featuredRidersData =
-              response.featuredRiders || [];
 
             renderSchedule(
               response.schedules || []
@@ -1576,11 +1567,11 @@
       document.getElementById("detailPage").classList.add("active");
 
 
-      document.getElementById("detailEventTitle").textContent =
+      document.getElementById("detailHeaderTitle").textContent =
         schedule.venueText;
 
 
-      document.getElementById("detailEventPeriod").textContent =
+      document.getElementById("detailHeaderPeriod").textContent =
         schedule.startText +
         "～" +
         schedule.endText +
@@ -1588,10 +1579,7 @@
         schedule.startWeekday +
         ")～(" +
         schedule.endWeekday +
-        ")";
-
-
-      renderFeaturedRiders(schedule.id);
+        ")  開催";
 
 
       window.scrollTo(0, 0);
@@ -1602,50 +1590,6 @@
     /*
      * 開催詳細 → トップ
      */
-
-    function renderFeaturedRiders(scheduleId) {
-
-      const list =
-        document.getElementById("featuredList");
-
-      const riders =
-        (window.featuredRidersData || [])
-          .filter(function(rider) {
-
-            return String(rider.scheduleId) ===
-              String(scheduleId);
-
-          });
-
-      if (!riders.length) {
-
-        list.innerHTML =
-          '<div class="featured-empty">' +
-          '現在、注目選手の情報はありません。' +
-          '</div>';
-
-        return;
-
-      }
-
-      list.innerHTML =
-        riders.map(function(rider) {
-
-          return (
-            '<div class="featured-card">' +
-              '<div class="featured-rider-name">' +
-                escapeHtml(rider.riderName) +
-              '</div>' +
-              '<div class="featured-rider-comment">' +
-                escapeHtml(rider.comment) +
-              '</div>' +
-            '</div>'
-          );
-
-        }).join("");
-
-    }
-
 
     function backToTop() {
 
