@@ -1427,6 +1427,22 @@
     }
 
 
+    function formatJapaneseDate(dateText, weekday) {
+
+      const parts = String(dateText || "").split("-");
+
+      if (parts.length !== 3) {
+        return dateText + "（" + weekday + "）";
+      }
+
+      const month = Number(parts[1]);
+      const day = Number(parts[2]);
+
+      return month + "月" + day + "日（" + weekday + "）";
+
+    }
+
+
     function renderFeaturedRiders(scheduleId) {
 
       const list =
@@ -1675,14 +1691,10 @@
 
 
       document.getElementById("detailHeaderPeriod").textContent =
-        schedule.startText +
+        formatJapaneseDate(schedule.startDate, schedule.startWeekday) +
         "～" +
-        schedule.endText +
-        "  (" +
-        schedule.startWeekday +
-        ")～(" +
-        schedule.endWeekday +
-        ")  開催";
+        formatJapaneseDate(schedule.endDate, schedule.endWeekday) +
+        " 開催";
 
 
       renderFeaturedRiders(schedule.id);
