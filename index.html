@@ -934,6 +934,54 @@
   }
 }
 
+
+/* ========================================
+   注目選手
+======================================== */
+
+.featured-box {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #eeeeee;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.06);
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.featured-list {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  min-width: 100%;
+}
+
+.featured-card {
+  width: 180px;
+  min-width: 180px;
+  padding: 14px 12px;
+  border-radius: 14px;
+  background: #fff2f7;
+  box-sizing: border-box;
+}
+
+.featured-rider-name {
+  color: #111111;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.featured-rider-comment {
+  margin-top: 8px;
+  color: #666666;
+  font-size: 13px;
+  line-height: 1.65;
+  word-break: break-word;
+}
+
 </style>
 
 </head>
@@ -1213,8 +1261,7 @@
 
         <div class="featured-box">
 
-          <div class="featured-empty">
-            注目選手の情報は次の工程で設定します。
+          <div id="featuredList" class="featured-list">
           </div>
 
         </div>
@@ -1362,6 +1409,9 @@
               );
 
             }
+
+            window.featuredRidersData =
+              response.featuredRiders || [];
 
             renderSchedule(
               response.schedules || []
@@ -1541,6 +1591,9 @@
         ")";
 
 
+      renderFeaturedRiders(schedule.id);
+
+
       window.scrollTo(0, 0);
 
     }
@@ -1549,6 +1602,50 @@
     /*
      * 開催詳細 → トップ
      */
+
+    function renderFeaturedRiders(scheduleId) {
+
+      const list =
+        document.getElementById("featuredList");
+
+      const riders =
+        (window.featuredRidersData || [])
+          .filter(function(rider) {
+
+            return String(rider.scheduleId) ===
+              String(scheduleId);
+
+          });
+
+      if (!riders.length) {
+
+        list.innerHTML =
+          '<div class="featured-empty">' +
+          '現在、注目選手の情報はありません。' +
+          '</div>';
+
+        return;
+
+      }
+
+      list.innerHTML =
+        riders.map(function(rider) {
+
+          return (
+            '<div class="featured-card">' +
+              '<div class="featured-rider-name">' +
+                escapeHtml(rider.riderName) +
+              '</div>' +
+              '<div class="featured-rider-comment">' +
+                escapeHtml(rider.comment) +
+              '</div>' +
+            '</div>'
+          );
+
+        }).join("");
+
+    }
+
 
     function backToTop() {
 
