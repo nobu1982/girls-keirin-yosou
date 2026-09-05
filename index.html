@@ -781,7 +781,6 @@
 <!-- 下部ビジュアル -->
 <div class="visual-area">
 
-  <div class="visual-area">
   <img
     src="visual.png"
     alt="競輪をもっと楽しく、もっと身近に。"
@@ -806,6 +805,34 @@
   </div>
 
 
+
+
+  <!-- ======================================
+       予想スケジュール画面
+  ======================================= -->
+
+  <section id="schedulePage" class="page">
+
+    <header class="schedule-page-header">
+      <div class="main-title">ガールズ競輪予想</div>
+      <div class="sub-title">DOKOTOクラブ立川</div>
+    </header>
+
+    <h1 class="schedule-title">予想スケジュール</h1>
+
+    <div id="scheduleList" class="schedule-list">
+      <div class="schedule-message">読み込み中です…</div>
+    </div>
+
+    <div class="schedule-note">
+      ※予想は各開催日の前日または当日に公開されます。
+    </div>
+
+    <button class="top-back-button" onclick="backToTop()" type="button">
+      ← トップに戻る
+    </button>
+
+  </section>
 
   <script>
 
@@ -854,17 +881,252 @@
 
 
     /*
-     * 次の工程で各ページへ変更します
+     * ========================================
+     * 画面切り替え
+     * ========================================
      */
+
+    const GAS_API_URL =
+      "https://script.google.com/macros/s/AKfycbzZhfQBFKpKPeBK5Ue6Zc4eBIMIEr0eUtYyTIiPVMX4NVJV-l9V7EqouFq_U0ljNWMfLg/exec";
+
 
     function openSchedule() {
 
+      document.querySelector(".app").style.display = "none";
+      document.getElementById("schedulePage").classList.add("active");
+
+      window.scrollTo(0, 0);
+
+      loadSchedule();
+
+    }
+
+
+    function backToTop() {
+
+      document.getElementById("schedulePage").classList.remove("active");
+      document.querySelector(".app").style.display = "block";
+
+      window.scrollTo(0, 0);
+
+    }
+
+
+    /*
+     * ========================================
+     * 予想スケジュール取得
+     * ========================================
+     */
+
+    function loadSchedule() {
+
+      const list =
+        document.getElementById("scheduleList");
+
+      list.innerHTML =
+        '<div class="schedule-message">読み込み中です…</div>';
+
+
+      const callbackName =
+        "scheduleCallback_" + Date.now();
+
+
+      window[callbackName] =
+        function(response) {
+
+          try {
+
+            if (
+              !response ||
+              response.success !== true
+            ) {
+              throw new Error(
+                response && response.error
+                  ? response.error
+                  : "データ取得に失敗しました。"
+              );
+            }
+
+            renderSchedule(
+              response.schedules || []
+            );
+
+          } catch (error) {
+
+            console.error(error);
+
+            list.innerHTML =
+              '<div class="schedule-message">' +
+              'スケジュールを取得できませんでした。' +
+              '<br>時間をおいて再度お試しください。' +
+              '</div>';
+
+          } finally {
+
+            cleanup();
+
+          }
+
+        };
+
+
+      const script =
+        document.createElement("script");
+
+
+      script.src =
+        GAS_API_URL +
+        "?callback=" +
+        encodeURIComponent(callbackName);
+
+
+      script.onerror =
+        function() {
+
+          list.innerHTML =
+            '<div class="schedule-message">' +
+            'スケジュールを取得できませんでした。' +
+            '<br>時間をおいて再度お試しください。' +
+            '</div>';
+
+          cleanup();
+
+        };
+
+
+      document.body.appendChild(script);
+
+
+      function cleanup() {
+
+        delete window[callbackName];
+
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
+
+      }
+
+    }
+
+
+    /*
+     * ========================================
+     * スケジュール表示
+     * ========================================
+     */
+
+    function renderSchedule(schedules) {
+
+      const list =
+        document.getElementById("scheduleList");
+
+
+      if (!schedules.length) {
+
+        list.innerHTML =
+          '<div class="schedule-message">' +
+          '現在公開されている開催はありません。' +
+          '</div>';
+
+        return;
+
+      }
+
+
+      list.innerHTML =
+        schedules.map(function(item) {
+
+          const dateText =
+            escapeHtml(item.startText) +
+            "～" +
+            escapeHtml(item.endText);
+
+
+          const weekdayText =
+            "(" +
+            escapeHtml(item.startWeekday) +
+            ")～(" +
+            escapeHtml(item.endWeekday) +
+            ")";
+
+
+          return (
+            '<button class="schedule-card" type="button" ' +
+              'onclick="openScheduleDetail(\'' +
+                escapeJs(item.id) +
+              '\')">' +
+
+              '<div class="schedule-date">' +
+                '<div class="schedule-date-main">' +
+                  dateText +
+                '</div>' +
+                '<div class="schedule-date-week">' +
+                  weekdayText +
+                '</div>' +
+              '</div>' +
+
+              '<div class="schedule-name">' +
+                escapeHtml(item.venueText) +
+              '</div>' +
+
+              '<div class="schedule-arrow">›</div>' +
+
+            '</button>'
+          );
+
+        }).join("");
+
+    }
+
+
+    /*
+     * 開催詳細は次工程で作成
+     */
+
+    function openScheduleDetail(scheduleId) {
+
+      console.log("開催ID:", scheduleId);
+
       alert(
-        "予想スケジュールは次の工程で作成します。"
+        "開催詳細画面は次の工程で作成します。"
       );
 
     }
 
+
+    /*
+     * ========================================
+     * HTMLエスケープ
+     * ========================================
+     */
+
+    function escapeHtml(value) {
+
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    function escapeJs(value) {
+
+      return String(value || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+
+    }
+
+
+    /*
+     * ========================================
+     * 未作成ページ
+     * ========================================
+     */
 
     function openCurrent() {
 
