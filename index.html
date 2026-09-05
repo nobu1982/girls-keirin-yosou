@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -10,11 +12,14 @@
 
   <title>ガールズ競輪予想</title>
 
+
   <style>
+
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
+
 
     html,
     body {
@@ -34,89 +39,72 @@
       color: #111111;
     }
 
+
     body {
       min-height: 100vh;
       overflow-x: hidden;
     }
 
+
     button {
       font-family: inherit;
     }
 
+
+    /* ========================================
+       全体
+    ======================================== */
+
     .app {
-      width: 100vw;
-      min-width: 100vw;
+      width: 100%;
       min-height: 100vh;
       background: #ffffff;
       overflow: hidden;
-      position: relative;
     }
 
-    /* ==============================
+
+    /* ========================================
        ヘッダー
-    ============================== */
+    ======================================== */
 
     .header {
-      height: 142px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 20px 18px 24px;
-      border-bottom: 5px solid #d82c78;
+      width: 100%;
+      padding: 28px 20px 22px;
       background: #ffffff;
-      z-index: 10;
+      border-bottom: 5px solid #d82c78;
+      text-align: center;
     }
 
-    .header-title {
-      flex: 1;
-      text-align: center;
-      padding-left: 40px;
-    }
 
     .main-title {
+      margin: 0;
       color: #d82c78;
-      font-size: 31px;
+      font-size: 32px;
       font-weight: 800;
-      line-height: 1.25;
-      white-space: nowrap;
+      line-height: 1.3;
       letter-spacing: -1px;
+      white-space: nowrap;
     }
+
 
     .sub-title {
       margin-top: 8px;
       color: #111111;
       font-size: 18px;
       font-weight: 600;
-      line-height: 1.2;
+      line-height: 1.3;
     }
 
-    .close-button {
-      flex: 0 0 auto;
-      width: 66px;
-      height: 66px;
-      border: 4px solid #d82c78;
-      background: #ffffff;
-      color: #d82c78;
-      font-size: 53px;
-      font-weight: 300;
-      line-height: 52px;
-      padding: 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
 
-    /* ==============================
+    /* ========================================
        メニュー
-    ============================== */
+    ======================================== */
 
     .menu {
+      width: 100%;
       padding: 28px 18px 0;
-      position: relative;
-      z-index: 5;
     }
+
 
     .menu-item {
       width: 100%;
@@ -124,409 +112,557 @@
       margin: 0 0 18px;
       padding: 0;
       display: flex;
-      align-items: center;
+      align-items: stretch;
       border: 2px solid #eeeeee;
       border-radius: 24px;
       background: #ffffff;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.08);
       overflow: hidden;
-      text-align: left;
-      cursor: pointer;
       appearance: none;
+      cursor: pointer;
+      text-align: left;
     }
+
 
     .menu-item:active {
       transform: scale(0.99);
     }
 
-    /* アイコン部分 */
+
+    /* ========================================
+       アイコン部分
+    ======================================== */
 
     .menu-icon {
-      width: 145px;
-      min-width: 145px;
-      height: 106px;
+      width: 125px;
+      min-width: 125px;
+      min-height: 106px;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #d82c78;
-      position: relative;
     }
 
+
+    /* カレンダー */
+
     .calendar-icon {
-      background: #ffffff;
+      background: #fff2f7;
     }
+
 
     .calendar-icon::before {
       content: "";
-      width: 94px;
-      height: 67px;
-      border: 7px solid #d82c78;
-      border-radius: 10px;
       position: absolute;
+      width: 82px;
+      height: 62px;
+      border: 7px solid #d82c78;
+      border-radius: 9px;
     }
+
 
     .calendar-icon::after {
       content: "";
-      width: 94px;
-      height: 14px;
-      border-top: 7px solid #d82c78;
       position: absolute;
-      top: 39px;
+      width: 82px;
+      height: 14px;
+      top: 38px;
+      border-top: 7px solid #d82c78;
     }
 
+
     .calendar-icon span {
-      width: 11px;
-      height: 11px;
-      background: #d82c78;
       position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #d82c78;
       z-index: 2;
     }
 
+
     .calendar-icon span:nth-child(1) {
-      left: 45px;
-      top: 50px;
+      left: 35px;
+      top: 52px;
     }
+
 
     .calendar-icon span:nth-child(2) {
-      left: 66px;
-      top: 50px;
+      left: 56px;
+      top: 52px;
     }
+
 
     .calendar-icon span:nth-child(3) {
-      left: 87px;
-      top: 50px;
+      left: 77px;
+      top: 52px;
     }
+
 
     .calendar-icon span:nth-child(4) {
-      left: 45px;
-      top: 70px;
+      left: 35px;
+      top: 71px;
     }
 
-    /* 王冠 */
+
+    /* ========================================
+       王冠
+    ======================================== */
 
     .crown-icon {
-      background: #fff0f5;
-      font-size: 59px;
+      background: #fff2f7;
+      color: #8127c7;
+      font-size: 58px;
       font-weight: 900;
-      color: #8627c7;
+      line-height: 1;
     }
 
-    /* グラフ */
+
+    /* ========================================
+       グラフ
+    ======================================== */
 
     .chart-icon {
-      background: #fff0f5;
-      position: relative;
+      background: #fff2f7;
     }
+
 
     .chart-icon::before {
       content: "";
       position: absolute;
-      width: 91px;
-      height: 67px;
+      width: 82px;
+      height: 64px;
       border: 7px solid #d82c78;
       border-radius: 8px;
     }
 
+
     .bar {
       position: absolute;
+      bottom: 25px;
       width: 9px;
       background: #d82c78;
-      bottom: 25px;
       z-index: 2;
     }
 
+
     .bar1 {
-      height: 19px;
-      left: 48px;
+      height: 18px;
+      left: 35px;
     }
+
 
     .bar2 {
       height: 35px;
-      left: 65px;
+      left: 51px;
     }
+
 
     .bar3 {
       height: 51px;
-      left: 82px;
+      left: 67px;
     }
+
 
     .chart-arrow {
       position: absolute;
+      left: 63px;
+      top: 20px;
       z-index: 3;
-      top: 18px;
-      left: 75px;
       color: #d82c78;
-      font-size: 38px;
+      font-size: 36px;
       font-weight: 900;
       line-height: 1;
     }
 
+
+    /* ========================================
+       テキスト
+    ======================================== */
+
     .menu-text {
       flex: 1;
       min-width: 0;
-      padding: 17px 8px 17px 8px;
+      padding: 22px 4px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+
 
     .menu-title {
-      font-size: 22px;
+      color: #111111;
+      font-size: 21px;
       font-weight: 800;
-      line-height: 1.35;
+      line-height: 1.4;
       white-space: nowrap;
     }
+
 
     .menu-description {
-      margin-top: 8px;
+      margin-top: 7px;
       color: #777777;
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.45;
       white-space: nowrap;
     }
 
+
+    /* ========================================
+       右矢印
+    ======================================== */
+
     .arrow {
-      width: 55px;
-      min-width: 55px;
+      width: 48px;
+      min-width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: #d82c78;
-      font-size: 52px;
+      font-size: 50px;
       font-weight: 300;
       line-height: 1;
-      text-align: center;
-      padding-right: 5px;
     }
 
-    /* ==============================
+
+    /* ========================================
        下部ビジュアル
-    ============================== */
+    ======================================== */
 
     .visual-area {
-      height: 250px;
+      width: 100%;
+      height: 300px;
       position: relative;
       overflow: hidden;
       margin-top: 2px;
       background:
         linear-gradient(
           180deg,
-          rgba(255,255,255,0) 0%,
-          rgba(255,240,247,0.45) 100%
+          #ffffff 0%,
+          #fff8fb 45%,
+          #ffe8f2 100%
         );
     }
+
+
+    /* バンク風のライン */
 
     .visual-area::before {
       content: "";
       position: absolute;
-      width: 520px;
-      height: 180px;
-      left: 50%;
-      bottom: 5px;
-      transform: translateX(-50%);
-      border-bottom: 2px solid rgba(216,44,120,0.10);
-      border-radius: 50%;
+      width: 150%;
+      height: 120px;
+      left: -20%;
+      bottom: 20px;
+      border-top: 7px solid rgba(216, 44, 120, 0.10);
+      border-bottom: 7px solid rgba(216, 44, 120, 0.08);
+      transform: rotate(-12deg);
     }
+
+
+    .visual-area::after {
+      content: "";
+      position: absolute;
+      width: 150%;
+      height: 8px;
+      left: -20%;
+      bottom: 76px;
+      background: rgba(255, 255, 255, 0.75);
+      transform: rotate(-12deg);
+    }
+
+
+    /* ========================================
+       キャッチコピー
+    ======================================== */
 
     .catch-copy {
       position: absolute;
       left: 25px;
-      top: 24px;
-      color: rgba(216,44,120,0.72);
-      font-size: 17px;
-      font-weight: 700;
-      line-height: 1.65;
-      z-index: 3;
+      top: 72px;
+      z-index: 5;
+      color: #d82c78;
+      font-size: 23px;
+      font-weight: 800;
+      line-height: 1.55;
     }
+
 
     .catch-line {
-      width: 54px;
-      height: 3px;
-      margin-top: 7px;
+      width: 70px;
+      height: 4px;
+      margin-top: 14px;
       background: #d82c78;
-      opacity: 0.55;
+      border-radius: 2px;
     }
 
-    /* 自転車の簡易ビジュアル */
+
+    /* ========================================
+       自転車
+    ======================================== */
 
     .bike {
       position: absolute;
-      width: 340px;
-      height: 180px;
+      width: 330px;
+      height: 220px;
       right: -45px;
-      bottom: 8px;
-      opacity: 0.12;
+      bottom: 0;
+      z-index: 4;
+      opacity: 0.16;
     }
+
 
     .bike-wheel {
       position: absolute;
-      width: 92px;
-      height: 92px;
-      border: 5px solid #d82c78;
+      width: 105px;
+      height: 105px;
+      bottom: 14px;
+      border: 6px solid #d82c78;
       border-radius: 50%;
-      bottom: 10px;
     }
 
+
     .wheel-left {
-      left: 15px;
+      left: 25px;
     }
+
 
     .wheel-right {
       right: 15px;
     }
 
+
     .bike-frame {
       position: absolute;
       width: 125px;
-      height: 5px;
+      height: 6px;
+      left: 80px;
+      bottom: 65px;
       background: #d82c78;
-      left: 67px;
-      bottom: 51px;
-      transform: rotate(-25deg);
+      transform: rotate(-24deg);
       transform-origin: left center;
+      border-radius: 4px;
     }
 
+
     .frame2 {
-      width: 115px;
-      left: 115px;
-      bottom: 51px;
-      transform: rotate(25deg);
+      width: 120px;
+      left: 125px;
+      bottom: 65px;
+      transform: rotate(26deg);
     }
+
 
     .frame3 {
       width: 100px;
-      left: 72px;
-      bottom: 51px;
+      left: 83px;
+      bottom: 65px;
       transform: rotate(0deg);
     }
 
+
     .bike-rider {
       position: absolute;
-      width: 70px;
-      height: 8px;
+      width: 90px;
+      height: 9px;
+      left: 137px;
+      bottom: 122px;
       background: #d82c78;
-      left: 142px;
-      bottom: 103px;
       transform: rotate(-15deg);
       border-radius: 10px;
     }
 
-    /* ==============================
-       LINEへ戻る
-    ============================== */
+
+    /* ========================================
+       LINEに戻る
+    ======================================== */
 
     .line-back-button {
       display: block;
       width: calc(100% - 36px);
-      min-height: 58px;
-      margin: 0 18px 24px;
-      border: 2px solid #d82c78;
-      border-radius: 16px;
+      min-height: 70px;
+      margin: 26px 18px 28px;
+      border: 3px solid #d82c78;
+      border-radius: 22px;
       background: #ffffff;
       color: #d82c78;
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 21px;
+      font-weight: 800;
       cursor: pointer;
       appearance: none;
     }
+
 
     .line-back-button:active {
       transform: scale(0.99);
     }
 
-    /* ==============================
-       小さいスマホ
-    ============================== */
 
-    @media (max-width: 360px) {
+    /* ========================================
+       小さいスマホ
+    ======================================== */
+
+    @media (max-width: 380px) {
 
       .header {
-        height: 132px;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding: 24px 14px 20px;
       }
 
-      .header-title {
-        padding-left: 20px;
-      }
 
       .main-title {
-        font-size: 27px;
+        font-size: 28px;
       }
+
 
       .sub-title {
-        font-size: 16px;
+        font-size: 17px;
       }
 
-      .close-button {
-        width: 58px;
-        height: 58px;
-        font-size: 46px;
-      }
 
       .menu {
         padding-left: 14px;
         padding-right: 14px;
       }
 
-      .menu-icon {
-        width: 120px;
-        min-width: 120px;
+
+      .menu-item {
+        min-height: 100px;
+        margin-bottom: 16px;
       }
 
+
+      .menu-icon {
+        width: 108px;
+        min-width: 108px;
+        min-height: 100px;
+      }
+
+
+      .calendar-icon::before {
+        width: 76px;
+        height: 58px;
+      }
+
+
+      .calendar-icon::after {
+        width: 76px;
+      }
+
+
+      .calendar-icon span:nth-child(1) {
+        left: 29px;
+      }
+
+
+      .calendar-icon span:nth-child(2) {
+        left: 48px;
+      }
+
+
+      .calendar-icon span:nth-child(3) {
+        left: 67px;
+      }
+
+
+      .calendar-icon span:nth-child(4) {
+        left: 29px;
+      }
+
+
+      .menu-text {
+        padding-left: 8px;
+      }
+
+
       .menu-title {
+        font-size: 19px;
+      }
+
+
+      .menu-description {
+        font-size: 11px;
+      }
+
+
+      .arrow {
+        width: 42px;
+        min-width: 42px;
+      }
+
+
+      .catch-copy {
+        left: 20px;
+        top: 65px;
         font-size: 20px;
       }
 
-      .menu-description {
-        font-size: 12px;
+
+      .bike {
+        right: -95px;
+        transform: scale(0.9);
+        transform-origin: bottom right;
       }
 
-      .arrow {
-        width: 45px;
-        min-width: 45px;
+
+      .line-back-button {
+        width: calc(100% - 28px);
+        margin-left: 14px;
+        margin-right: 14px;
+        font-size: 19px;
       }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
   <div class="app">
 
-    <!-- ヘッダー -->
+
+    <!-- ======================================
+         ヘッダー
+    ======================================= -->
+
     <header class="header">
 
-      <div class="header-title">
-        <div class="main-title">
-          ガールズ競輪予想
-        </div>
-
-        <div class="sub-title">
-          DOKOTOクラブ立川
-        </div>
+      <div class="main-title">
+        ガールズ競輪予想
       </div>
 
-      <button
-        class="close-button"
-        onclick="closePage()"
-        aria-label="閉じる"
-      >
-        ×
-      </button>
+      <div class="sub-title">
+        DOKOTOクラブ立川
+      </div>
 
     </header>
 
 
-    <!-- メニュー -->
+    <!-- ======================================
+         メニュー
+    ======================================= -->
+
     <main class="menu">
 
+
       <!-- 予想スケジュール -->
+
       <button
         class="menu-item"
         onclick="openSchedule()"
       >
 
         <div class="menu-icon calendar-icon">
+
           <span></span>
           <span></span>
           <span></span>
           <span></span>
+
         </div>
+
 
         <div class="menu-text">
 
@@ -540,6 +676,7 @@
 
         </div>
 
+
         <div class="arrow">
           ›
         </div>
@@ -547,18 +684,23 @@
       </button>
 
 
+
       <!-- 現在開催中の情報 -->
+
       <button
         class="menu-item"
         onclick="openCurrent()"
       >
 
         <div class="menu-icon calendar-icon">
+
           <span></span>
           <span></span>
           <span></span>
           <span></span>
+
         </div>
+
 
         <div class="menu-text">
 
@@ -572,6 +714,7 @@
 
         </div>
 
+
         <div class="arrow">
           ›
         </div>
@@ -579,7 +722,9 @@
       </button>
 
 
+
       <!-- 本日の予想 -->
+
       <button
         class="menu-item"
         onclick="openToday()"
@@ -588,6 +733,7 @@
         <div class="menu-icon crown-icon">
           ♛
         </div>
+
 
         <div class="menu-text">
 
@@ -601,6 +747,7 @@
 
         </div>
 
+
         <div class="arrow">
           ›
         </div>
@@ -608,7 +755,9 @@
       </button>
 
 
+
       <!-- 予想実績 -->
+
       <button
         class="menu-item"
         onclick="openResults()"
@@ -626,6 +775,7 @@
 
         </div>
 
+
         <div class="menu-text">
 
           <div class="menu-title">
@@ -638,41 +788,60 @@
 
         </div>
 
+
         <div class="arrow">
           ›
         </div>
 
       </button>
 
+
     </main>
 
 
-    <!-- 下部ビジュアル -->
+
+    <!-- ======================================
+         下部ビジュアル
+    ======================================= -->
+
     <div class="visual-area">
 
+
       <div class="catch-copy">
+
         競輪をもっと楽しく、<br>
         もっと身近に。
+
         <div class="catch-line"></div>
+
       </div>
+
 
       <div class="bike">
 
         <div class="bike-wheel wheel-left"></div>
+
         <div class="bike-wheel wheel-right"></div>
 
         <div class="bike-frame"></div>
+
         <div class="bike-frame frame2"></div>
+
         <div class="bike-frame frame3"></div>
 
         <div class="bike-rider"></div>
 
       </div>
 
+
     </div>
 
 
-    <!-- LINEに戻る -->
+
+    <!-- ======================================
+         LINEに戻る
+    ======================================= -->
+
     <button
       class="line-back-button"
       onclick="closePage()"
@@ -680,53 +849,59 @@
       ← LINEに戻る
     </button>
 
+
   </div>
+
 
 
   <script>
 
     /*
-     * × と「LINEに戻る」は同じ動作
+     * LINEへ戻る
      *
-     * 現時点ではGitHub Pagesでの確認用。
-     * LIFF設定後はLINE内で閉じる動作に変更できます。
+     * 現在はGitHub Pagesでの確認段階。
+     * LIFF接続後にLINE内で閉じる処理を追加します。
      */
+
     function closePage() {
 
-      /*
-       * LIFFが利用できる場合
-       */
       if (
         typeof liff !== "undefined" &&
         typeof liff.closeWindow === "function"
       ) {
+
         try {
+
           liff.closeWindow();
+
           return;
+
         } catch (error) {
+
           console.log(error);
+
         }
+
       }
 
-      /*
-       * 通常ブラウザでの確認用
-       */
+
       if (window.history.length > 1) {
+
         window.history.back();
+
         return;
+
       }
 
-      /*
-       * 戻る履歴がない場合
-       */
+
       window.close();
 
     }
 
 
+
     /*
-     * 以下は現在は仮動作。
-     * 次の工程で各ページを作ります。
+     * 次の工程で各ページへ変更します
      */
 
     function openSchedule() {
@@ -765,6 +940,7 @@
     }
 
   </script>
+
 
 </body>
 </html>
