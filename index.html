@@ -1048,6 +1048,135 @@
   box-sizing: border-box;
 }
 
+
+/* ========================================
+   当日予想一覧
+======================================== */
+
+.prediction-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prediction-date-note {
+  margin: 0 0 10px;
+  color: #333333;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.prediction-card {
+  width: 100%;
+  min-height: 78px;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 7px rgba(0,0,0,.07);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.prediction-race {
+  width: 104px;
+  min-width: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff2f7;
+  color: #111111;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.prediction-info {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 8px 10px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.prediction-name {
+  color: #111111;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.prediction-time {
+  margin-top: 3px;
+  color: #333333;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.prediction-button {
+  align-self: center;
+  min-width: 118px;
+  min-height: 48px;
+  margin: 0 10px 0 4px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 7px;
+  background: #d82c78;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  appearance: none;
+  white-space: nowrap;
+}
+
+.prediction-button:active {
+  transform: scale(0.98);
+}
+
+.prediction-empty {
+  width: 100%;
+  padding: 22px 16px;
+  border-radius: 12px;
+  background: #fff2f7;
+  color: #777777;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+@media (max-width: 380px) {
+  .prediction-race {
+    width: 82px;
+    min-width: 82px;
+    font-size: 22px;
+  }
+
+  .prediction-info {
+    padding-left: 10px;
+  }
+
+  .prediction-name {
+    font-size: 15px;
+  }
+
+  .prediction-time {
+    font-size: 12px;
+  }
+
+  .prediction-button {
+    min-width: 92px;
+    margin-right: 7px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+}
+
 </style>
 
 </head>
@@ -1335,8 +1464,12 @@
           📅 当日予想一覧
         </h2>
 
-        <div class="prediction-empty">
-          開催日の予想は次の工程で表示します。
+        <div id="predictionDateNote" class="prediction-date-note"></div>
+
+        <div id="predictionList" class="prediction-list">
+          <div class="prediction-empty">
+            開催日の予想を読み込み中です…
+          </div>
         </div>
 
       </section>
@@ -1413,6 +1546,7 @@
 
 
     window.scheduleData = [];
+    window.dailyPredictionsData = [];
 
 
     function openSchedule() {
@@ -1522,6 +1656,18 @@
 
             window.featuredRidersData =
               response.featuredRiders || [];
+
+            /*
+             * 日別予想
+             *
+             * GASから返ってきた日別予想を保存します。
+             * API側の項目名が predictions / dailyPredictions
+             * のどちらでも受け取れるようにしています。
+             */
+            window.dailyPredictionsData =
+              response.dailyPredictions ||
+              response.predictions ||
+              [];
 
             renderSchedule(
               response.schedules || []
@@ -1699,6 +1845,10 @@
 
       renderFeaturedRiders(schedule.id);
 
+      /*
+       * 当日予想一覧を表示
+       */
+      renderDailyPredictions(schedule);
 
       window.scrollTo(0, 0);
 
@@ -1720,6 +1870,284 @@
       document.getElementById("topPage").style.display = "block";
 
       window.scrollTo(0, 0);
+
+    }
+
+
+
+    /*
+     * ========================================
+     * 当日予想一覧
+     * ========================================
+     */
+
+    function renderDailyPredictions(schedule) {
+
+      const note =
+        document.getElementById("predictionDateNote");
+
+      const list =
+        document.getElementById("predictionList");
+
+      if (!note || !list) {
+        return;
+      }
+
+      const today = getTodayInJapan();
+
+      /*
+       * 開催期間内なら今日の日付、
+       * 期間外なら開催初日を表示対象にします。
+       */
+      let targetDate = today;
+
+      if (today < schedule.startDate) {
+        targetDate = schedule.startDate;
+      }
+
+      if (today > schedule.endDate) {
+        targetDate = schedule.endDate;
+      }
+
+      const targetDateObj = new Date(targetDate + "T00:00:00");
+      const targetWeekday =
+        getJapaneseWeekdayFromDate(targetDateObj);
+
+      const dateLabel =
+        formatFullJapaneseDate(targetDate, targetWeekday);
+
+      note.textContent =
+        "※ 表示は" + dateLabel + "の予想です。";
+
+      const predictions =
+        (window.dailyPredictionsData || [])
+          .filter(function(item) {
+
+            const itemScheduleId =
+              String(
+                item.scheduleId ??
+                item.id ??
+                ""
+              ).trim().padStart(3, "0");
+
+            const targetScheduleId =
+              String(schedule.id)
+                .trim().padStart(3, "0");
+
+            const itemDate =
+              normalizeDateString(
+                item.predictionDate ??
+                item.date ??
+                item.yosobi ??
+                ""
+              );
+
+            return (
+              itemScheduleId === targetScheduleId &&
+              itemDate === targetDate
+            );
+
+          })
+          .sort(function(a, b) {
+
+            return Number(a.raceNumber ?? a.raceNo ?? 0) -
+                   Number(b.raceNumber ?? b.raceNo ?? 0);
+
+          });
+
+      if (!predictions.length) {
+
+        list.innerHTML =
+          '<div class="prediction-empty">' +
+          'この日の予想はまだ公開されていません。' +
+          '</div>';
+
+        return;
+      }
+
+      list.innerHTML =
+        predictions.map(function(item) {
+
+          const raceNumber =
+            item.raceNumber ??
+            item.raceNo ??
+            item.race ??
+            "";
+
+          const raceName =
+            item.raceName ??
+            "";
+
+          const startTime =
+            item.startTime ??
+            item.time ??
+            "";
+
+          const url =
+            item.startListUrl ??
+            item.raceUrl ??
+            item.url ??
+            "";
+
+          return (
+            '<div class="prediction-card">' +
+
+              '<div class="prediction-race">' +
+                escapeHtml(raceNumber) + 'R' +
+              '</div>' +
+
+              '<div class="prediction-info">' +
+
+                '<div class="prediction-name">' +
+                  escapeHtml(raceName) +
+                '</div>' +
+
+                '<div class="prediction-time">' +
+                  (startTime
+                    ? '発走 ' + escapeHtml(startTime)
+                    : '') +
+                '</div>' +
+
+              '</div>' +
+
+              '<button ' +
+                'class="prediction-button" ' +
+                'type="button" ' +
+                'onclick="openPredictionDetail(' +
+                  '\'' + escapeJs(JSON.stringify({
+                    scheduleId: schedule.id,
+                    predictionDate: targetDate,
+                    raceNumber: raceNumber
+                  })) + '\'' +
+                ')">' +
+                '予想を見る ›' +
+              '</button>' +
+
+            '</div>'
+          );
+
+        }).join("");
+
+    }
+
+
+    function openPredictionDetail(dataText) {
+
+      /*
+       * 次の工程で予想詳細画面を作成します。
+       * 今はボタンの動作確認用です。
+       */
+      try {
+
+        const data =
+          JSON.parse(dataText);
+
+        console.log(
+          "予想詳細",
+          data
+        );
+
+        alert(
+          "予想詳細画面は次の工程で作成します。"
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    function getTodayInJapan() {
+
+      const now = new Date();
+
+      const y =
+        now.getFullYear();
+
+      const m =
+        String(now.getMonth() + 1)
+          .padStart(2, "0");
+
+      const d =
+        String(now.getDate())
+          .padStart(2, "0");
+
+      return y + "-" + m + "-" + d;
+
+    }
+
+
+    function normalizeDateString(value) {
+
+      if (!value) {
+        return "";
+      }
+
+      const text =
+        String(value).trim();
+
+      if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
+        return text;
+      }
+
+      const match =
+        text.match(
+          /(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/
+        );
+
+      if (!match) {
+        return "";
+      }
+
+      return (
+        match[1] + "-" +
+        String(match[2]).padStart(2, "0") + "-" +
+        String(match[3]).padStart(2, "0")
+      );
+
+    }
+
+
+    function getJapaneseWeekdayFromDate(date) {
+
+      const weekdays = [
+        "日",
+        "月",
+        "火",
+        "水",
+        "木",
+        "金",
+        "土"
+      ];
+
+      return weekdays[date.getDay()];
+
+    }
+
+
+    function formatFullJapaneseDate(
+      dateText,
+      weekday
+    ) {
+
+      const parts =
+        String(dateText || "").split("-");
+
+      if (parts.length !== 3) {
+        return dateText + "（" + weekday + "）";
+      }
+
+      return (
+        Number(parts[1]) +
+        "月" +
+        Number(parts[2]) +
+        "日（" +
+        weekday +
+        "）"
+      );
 
     }
 
