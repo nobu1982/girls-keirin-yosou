@@ -1601,7 +1601,7 @@
           return (
             '<div class="featured-card">' +
               '<div class="featured-rider-name">' +
-                escapeHtml(rider.riderName) +
+                escapeHtml(rider.riderName || rider.name || "") +
               '</div>' +
               '<div class="featured-rider-comment">' +
                 escapeHtml(rider.comment) +
