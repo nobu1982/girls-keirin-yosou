@@ -2329,13 +2329,10 @@
               '<button ' +
                 'class="prediction-button" ' +
                 'type="button" ' +
-                'onclick="openPredictionDetail(' +
-                  '\'' + escapeJs(JSON.stringify({
-                    scheduleId: schedule.id,
-                    predictionDate: targetDate,
-                    raceNumber: raceNumber
-                  })) + '\'' +
-                ')">' +
+                'data-schedule-id="' + escapeHtml(schedule.id) + '" ' +
+                'data-prediction-date="' + escapeHtml(targetDate) + '" ' +
+                'data-race-number="' + escapeHtml(raceNumber) + '"' +
+                '>' +
                 '予想を見る ›' +
               '</button>' +
 
@@ -2347,15 +2344,13 @@
     }
 
 
-    function openPredictionDetail(dataText) {
+    function openPredictionDetail(scheduleId, predictionDate, raceNumber) {
 
       try {
 
-        const data = JSON.parse(dataText);
-
         const schedule =
           (window.scheduleData || []).find(function(item) {
-            return String(item.id) === String(data.scheduleId);
+            return String(item.id) === String(scheduleId);
           });
 
         if (!schedule) {
@@ -2368,9 +2363,7 @@
         document.getElementById("detailPage").classList.remove("active");
         document.getElementById("predictionDetailPage").classList.add("active");
 
-        const today = getTodayInJapan();
-
-        let targetDate = data.predictionDate || today;
+        let targetDate = predictionDate || getTodayInJapan();
 
         if (targetDate < schedule.startDate) {
           targetDate = schedule.startDate;
@@ -2390,20 +2383,42 @@
         document.getElementById("predictionDetailHeaderPeriod").textContent =
           formatFullJapaneseDate(targetDate, targetWeekday) + "の予想";
 
-        renderPredictionDetail(schedule, targetDate, data.raceNumber);
+        renderPredictionDetail(schedule, targetDate, raceNumber);
 
         window.scrollTo(0, 0);
 
       } catch (error) {
 
-        console.error(error);
-
+        console.error("openPredictionDetail error:", error);
         alert("予想詳細を表示できませんでした。");
 
       }
 
     }
 
+
+    /*
+     * 「予想を見る」ボタンは、HTMLのonclickにJSONを埋め込まず、
+     * data属性から安全に値を取得して画面遷移します。
+     */
+    document.addEventListener("click", function(event) {
+
+      const button = event.target.closest(".prediction-button");
+
+      if (!button) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      openPredictionDetail(
+        button.getAttribute("data-schedule-id"),
+        button.getAttribute("data-prediction-date"),
+        button.getAttribute("data-race-number")
+      );
+
+    });
 
     function renderPredictionDetail(schedule, targetDate, selectedRaceNumber) {
 
