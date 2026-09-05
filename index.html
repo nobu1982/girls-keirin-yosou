@@ -985,6 +985,64 @@
   }
 }
 
+
+
+/* 注目選手表示 */
+.featured-box {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.featured-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.featured-card {
+  width: 100%;
+  min-height: 68px;
+  padding: 11px 16px;
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 7px rgba(0,0,0,.07);
+  box-sizing: border-box;
+}
+
+.featured-rider-name {
+  color: #111111;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.featured-rider-comment {
+  margin-top: 3px;
+  color: #333333;
+  font-size: 14px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.featured-empty {
+  width: 100%;
+  padding: 20px 10px;
+  border-radius: 12px;
+  background: #fff2f7;
+  color: #777777;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+  box-sizing: border-box;
+}
+
 </style>
 
 </head>
@@ -1256,8 +1314,7 @@
 
         <div class="featured-box">
 
-          <div class="featured-empty">
-            注目選手の情報は次の工程で設定します。
+          <div id="featuredList" class="featured-list">
           </div>
 
         </div>
@@ -1365,6 +1422,42 @@
     }
 
 
+    function renderFeaturedRiders(scheduleId) {
+
+      const list =
+        document.getElementById("featuredList");
+
+      const riders =
+        (window.featuredRidersData || [])
+          .filter(function(rider) {
+            return String(rider.scheduleId) === String(scheduleId);
+          });
+
+      if (!riders.length) {
+        list.innerHTML =
+          '<div class="featured-empty">' +
+          '現在、注目選手の情報はありません。' +
+          '</div>';
+        return;
+      }
+
+      list.innerHTML =
+        riders.map(function(rider) {
+          return (
+            '<div class="featured-card">' +
+              '<div class="featured-rider-name">' +
+                escapeHtml(rider.riderName) +
+              '</div>' +
+              '<div class="featured-rider-comment">' +
+                escapeHtml(rider.comment) +
+              '</div>' +
+            '</div>'
+          );
+        }).join("");
+
+    }
+
+
     function backToTop() {
 
       document.getElementById("schedulePage").classList.remove("active");
@@ -1405,6 +1498,9 @@
               );
 
             }
+
+            window.featuredRidersData =
+              response.featuredRiders || [];
 
             renderSchedule(
               response.schedules || []
@@ -1582,6 +1678,9 @@
         ")～(" +
         schedule.endWeekday +
         ")  開催";
+
+
+      renderFeaturedRiders(schedule.id);
 
 
       window.scrollTo(0, 0);
