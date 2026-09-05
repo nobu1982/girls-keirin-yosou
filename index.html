@@ -795,6 +795,145 @@
   }
 }
 
+
+/* ========================================
+   開催詳細画面
+======================================== */
+
+.detail-page {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.detail-page.active {
+  display: block;
+}
+
+.detail-page-header {
+  width: 100%;
+  padding: 24px 20px 18px;
+  background: #ffffff;
+  border-bottom: 5px solid #d82c78;
+  text-align: center;
+}
+
+.detail-page-header .main-title {
+  font-size: 28px;
+}
+
+.detail-page-header .sub-title {
+  font-size: 16px;
+  margin-top: 6px;
+}
+
+.detail-content {
+  width: 100%;
+  padding: 24px 18px 0;
+}
+
+.detail-event-title {
+  margin: 0 0 22px;
+  color: #111111;
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.detail-event-period {
+  margin-top: -14px;
+  margin-bottom: 24px;
+  color: #777777;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.detail-section-title {
+  margin: 0 0 14px;
+  color: #111111;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.featured-box {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #eeeeee;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.06);
+}
+
+.featured-empty {
+  padding: 8px 2px;
+  color: #777777;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.prediction-section {
+  margin-top: 28px;
+}
+
+.prediction-empty {
+  width: 100%;
+  padding: 22px 16px;
+  border-radius: 16px;
+  background: #fff2f7;
+  color: #777777;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.detail-back-button {
+  display: block;
+  width: calc(100% - 36px);
+  min-height: 64px;
+  margin: 28px 18px 28px;
+  border: 3px solid #d82c78;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #d82c78;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  appearance: none;
+}
+
+.detail-back-button:active {
+  transform: scale(0.99);
+}
+
+@media (max-width: 380px) {
+  .detail-page-header {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .detail-page-header .main-title {
+    font-size: 25px;
+  }
+
+  .detail-content {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .detail-event-title {
+    font-size: 23px;
+  }
+
+  .detail-back-button {
+    width: calc(100% - 28px);
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+}
+
 </style>
 
 </head>
@@ -1043,6 +1182,75 @@
 
   </div>
 
+  <!-- ======================================
+       開催詳細画面
+  ======================================= -->
+
+  <section id="detailPage" class="detail-page">
+
+    <header class="detail-page-header">
+      <div class="main-title">ガールズ競輪予想</div>
+      <div class="sub-title">DOKOTOクラブ立川</div>
+    </header>
+
+    <main class="detail-content">
+
+      <h1 id="detailEventTitle" class="detail-event-title">
+        開催情報
+      </h1>
+
+      <div id="detailEventPeriod" class="detail-event-period">
+      </div>
+
+
+      <!-- 注目選手 -->
+
+      <section>
+
+        <h2 class="detail-section-title">
+          ⭐ 注目選手
+        </h2>
+
+        <div class="featured-box">
+
+          <div class="featured-empty">
+            注目選手の情報は次の工程で設定します。
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- 当日予想一覧 -->
+
+      <section class="prediction-section">
+
+        <h2 class="detail-section-title">
+          当日予想一覧
+        </h2>
+
+        <div class="prediction-empty">
+          開催日の予想は次の工程で表示します。
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <button
+      class="detail-back-button"
+      type="button"
+      onclick="backToSchedule()"
+    >
+      ← 予想スケジュールに戻る
+    </button>
+
+  </section>
+
+
+
   <script>
 
     /*
@@ -1097,6 +1305,9 @@
 
     const GAS_API_URL =
       "https://script.google.com/macros/s/AKfycbzZhfQBFKpKPeBK5Ue6Zc4eBIMIEr0eUtYyTIiPVMX4NVJV-l9V7EqouFq_U0ljNWMfLg/exec";
+
+
+    window.scheduleData = [];
 
 
     function openSchedule() {
@@ -1217,6 +1428,8 @@
 
     function renderSchedule(schedules) {
 
+      window.scheduleData = schedules || [];
+
       const list =
         document.getElementById("scheduleList");
 
@@ -1281,11 +1494,59 @@
 
     function openScheduleDetail(scheduleId) {
 
-      console.log("開催ID:", scheduleId);
+      const schedule =
+        window.scheduleData.find(function(item) {
 
-      alert(
-        "開催詳細画面は次の工程で作成します。"
-      );
+          return String(item.id) === String(scheduleId);
+
+        });
+
+
+      if (!schedule) {
+
+        alert(
+          "開催情報を取得できませんでした。"
+        );
+
+        return;
+
+      }
+
+
+      document.querySelector(".app").style.display = "none";
+
+      document.getElementById("schedulePage").classList.remove("active");
+
+      document.getElementById("detailPage").classList.add("active");
+
+
+      document.getElementById("detailEventTitle").textContent =
+        schedule.venueText;
+
+
+      document.getElementById("detailEventPeriod").textContent =
+        schedule.startText +
+        "～" +
+        schedule.endText +
+        "  (" +
+        schedule.startWeekday +
+        ")～(" +
+        schedule.endWeekday +
+        ")";
+
+
+      window.scrollTo(0, 0);
+
+    }
+
+
+    function backToSchedule() {
+
+      document.getElementById("detailPage").classList.remove("active");
+
+      document.getElementById("schedulePage").classList.add("active");
+
+      window.scrollTo(0, 0);
 
     }
 
