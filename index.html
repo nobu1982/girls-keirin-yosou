@@ -1513,12 +1513,22 @@
       }
 
 
-      document.getElementById("topPage").style.display = "none";
+      /*
+       * 開催詳細画面を表示
+       *
+       * schedulePageを完全に隠し、
+       * detailPageを明示的に表示します。
+       */
 
-      document.getElementById("schedulePage").classList.remove("active");
+      document.getElementById("schedulePage").style.display = "none";
 
       document.getElementById("detailPage").classList.add("active");
+      document.getElementById("detailPage").style.display = "block";
 
+
+      /*
+       * 開催情報を表示
+       */
 
       document.getElementById("detailEventTitle").textContent =
         schedule.venueText;
@@ -1540,11 +1550,14 @@
     }
 
 
-    function backToSchedule() {
+    function backToTop() {
 
       document.getElementById("detailPage").classList.remove("active");
+      document.getElementById("detailPage").style.display = "none";
 
-      document.getElementById("schedulePage").classList.add("active");
+      document.getElementById("schedulePage").style.display = "none";
+
+      document.getElementById("topPage").style.display = "block";
 
       window.scrollTo(0, 0);
 
