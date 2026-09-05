@@ -1177,6 +1177,289 @@
   }
 }
 
+
+/* ========================================
+   予想詳細画面
+======================================== */
+
+.prediction-detail-page {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.prediction-detail-page.active {
+  display: block;
+}
+
+.prediction-detail-header {
+  width: 100%;
+  padding: 18px 16px 15px;
+  background: linear-gradient(135deg, #d82c78, #e34886);
+  color: #ffffff;
+  text-align: center;
+}
+
+.prediction-detail-header .main-title {
+  color: #ffffff;
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.prediction-detail-header .sub-title {
+  margin-top: 4px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.prediction-detail-content {
+  width: 100%;
+  padding: 14px 16px 0;
+  box-sizing: border-box;
+}
+
+.prediction-detail-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prediction-detail-card {
+  width: 100%;
+  border: 1px solid #e9e9e9;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 7px rgba(0,0,0,.07);
+  overflow: hidden;
+}
+
+.prediction-detail-race-head {
+  min-height: 72px;
+  display: flex;
+  align-items: stretch;
+}
+
+.prediction-detail-race-number {
+  width: 104px;
+  min-width: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff2f7;
+  color: #111111;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.prediction-detail-race-info {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px 8px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.prediction-detail-race-name {
+  color: #111111;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.prediction-detail-race-time {
+  margin-top: 3px;
+  color: #333333;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.prediction-values {
+  margin: 0 10px 10px;
+  padding: 7px 8px;
+  border-radius: 9px;
+  background: #fff2f7;
+}
+
+.prediction-value-row {
+  display: flex;
+  align-items: center;
+  min-height: 31px;
+  margin-bottom: 4px;
+}
+
+.prediction-value-row:last-child {
+  margin-bottom: 0;
+}
+
+.prediction-mark {
+  width: 36px;
+  min-width: 36px;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.prediction-mark.main {
+  color: #e51f70;
+}
+
+.prediction-mark.second {
+  color: #555555;
+}
+
+.prediction-mark.third {
+  color: #111111;
+}
+
+.prediction-label {
+  width: 58px;
+  min-width: 58px;
+  color: #111111;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.prediction-number {
+  flex: 1;
+  min-width: 0;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.start-list-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  margin: 0 10px 10px;
+  border: 2px solid #e51f70;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #e51f70;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.start-list-link .external-icon {
+  margin-right: 7px;
+  font-size: 18px;
+}
+
+.start-list-link .link-arrow {
+  margin-left: auto;
+  margin-right: 8px;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.prediction-detail-empty {
+  width: 100%;
+  padding: 24px 16px;
+  border-radius: 12px;
+  background: #fff2f7;
+  color: #777777;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.7;
+  box-sizing: border-box;
+}
+
+.prediction-detail-back-button {
+  display: block;
+  width: calc(100% - 32px);
+  min-height: 60px;
+  margin: 14px 16px 22px;
+  border: 3px solid #e51f70;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #e51f70;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  appearance: none;
+  box-sizing: border-box;
+}
+
+.prediction-detail-back-button:active {
+  transform: scale(0.99);
+}
+
+@media (max-width: 380px) {
+  .prediction-detail-header {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .prediction-detail-header .main-title {
+    font-size: 24px;
+  }
+
+  .prediction-detail-header .sub-title {
+    font-size: 15px;
+  }
+
+  .prediction-detail-content {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .prediction-detail-race-number {
+    width: 76px;
+    min-width: 76px;
+    font-size: 22px;
+  }
+
+  .prediction-detail-race-info {
+    padding-left: 10px;
+  }
+
+  .prediction-detail-race-name {
+    font-size: 15px;
+  }
+
+  .prediction-detail-race-time {
+    font-size: 12px;
+  }
+
+  .prediction-mark {
+    width: 31px;
+    min-width: 31px;
+    font-size: 22px;
+  }
+
+  .prediction-label {
+    width: 50px;
+    min-width: 50px;
+    font-size: 13px;
+  }
+
+  .prediction-number {
+    font-size: 14px;
+  }
+
+  .prediction-detail-back-button {
+    width: calc(100% - 24px);
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+
 </style>
 
 </head>
@@ -1487,6 +1770,39 @@
 
   </section>
 
+
+
+
+<!-- ======================================
+     予想詳細画面
+======================================= -->
+
+<section id="predictionDetailPage" class="prediction-detail-page">
+
+  <header class="prediction-detail-header">
+    <div class="main-title" id="predictionDetailHeaderTitle">開催情報</div>
+    <div class="sub-title" id="predictionDetailHeaderPeriod"></div>
+  </header>
+
+  <main class="prediction-detail-content">
+
+    <div id="predictionDetailList" class="prediction-detail-list">
+      <div class="prediction-detail-empty">
+        予想を読み込み中です…
+      </div>
+    </div>
+
+  </main>
+
+  <button
+    class="prediction-detail-back-button"
+    type="button"
+    onclick="backFromPredictionDetail()"
+  >
+    ← トップに戻る
+  </button>
+
+</section>
 
 
   <script>
@@ -2033,31 +2349,290 @@
 
     function openPredictionDetail(dataText) {
 
-      /*
-       * 次の工程で予想詳細画面を作成します。
-       * 今はボタンの動作確認用です。
-       */
       try {
 
-        const data =
-          JSON.parse(dataText);
+        const data = JSON.parse(dataText);
 
-        console.log(
-          "予想詳細",
-          data
-        );
+        const schedule =
+          (window.scheduleData || []).find(function(item) {
+            return String(item.id) === String(data.scheduleId);
+          });
 
-        alert(
-          "予想詳細画面は次の工程で作成します。"
-        );
+        if (!schedule) {
+          alert("開催情報を取得できませんでした。");
+          return;
+        }
+
+        document.getElementById("topPage").style.display = "none";
+        document.getElementById("schedulePage").classList.remove("active");
+        document.getElementById("detailPage").classList.remove("active");
+        document.getElementById("predictionDetailPage").classList.add("active");
+
+        const today = getTodayInJapan();
+
+        let targetDate = data.predictionDate || today;
+
+        if (targetDate < schedule.startDate) {
+          targetDate = schedule.startDate;
+        }
+
+        if (targetDate > schedule.endDate) {
+          targetDate = schedule.endDate;
+        }
+
+        const targetDateObj = new Date(targetDate + "T00:00:00");
+        const targetWeekday =
+          getJapaneseWeekdayFromDate(targetDateObj);
+
+        document.getElementById("predictionDetailHeaderTitle").textContent =
+          schedule.venueText;
+
+        document.getElementById("predictionDetailHeaderPeriod").textContent =
+          formatFullJapaneseDate(targetDate, targetWeekday) + "の予想";
+
+        renderPredictionDetail(schedule, targetDate, data.raceNumber);
+
+        window.scrollTo(0, 0);
 
       } catch (error) {
 
         console.error(error);
 
+        alert("予想詳細を表示できませんでした。");
+
       }
 
     }
+
+
+    function renderPredictionDetail(schedule, targetDate, selectedRaceNumber) {
+
+      const list =
+        document.getElementById("predictionDetailList");
+
+      if (!list) {
+        return;
+      }
+
+      const targetScheduleId =
+        String(schedule.id).trim().padStart(3, "0");
+
+      let predictions =
+        (window.dailyPredictionsData || [])
+          .filter(function(item) {
+
+            const itemScheduleId =
+              String(
+                item.scheduleId ??
+                item.id ??
+                ""
+              ).trim().padStart(3, "0");
+
+            const itemDate =
+              normalizeDateString(
+                item.predictionDate ??
+                item.date ??
+                item.yosobi ??
+                ""
+              );
+
+            return (
+              itemScheduleId === targetScheduleId &&
+              itemDate === targetDate
+            );
+
+          })
+          .sort(function(a, b) {
+
+            return Number(
+              a.raceNumber ??
+              a.raceNo ??
+              a.race ??
+              0
+            ) -
+            Number(
+              b.raceNumber ??
+              b.raceNo ??
+              b.race ??
+              0
+            );
+
+          });
+
+      if (!predictions.length) {
+
+        list.innerHTML =
+          '<div class="prediction-detail-empty">' +
+          'この日の予想はまだ公開されていません。' +
+          '</div>';
+
+        return;
+      }
+
+      /*
+       * 参考画像と同じく、その日の予想レースを縦に並べます。
+       * 「予想を見る」を押したレースがある場合は、
+       * そのレースへ自動スクロールします。
+       */
+
+      list.innerHTML =
+        predictions.map(function(item, index) {
+
+          const raceNumber =
+            item.raceNumber ??
+            item.raceNo ??
+            item.race ??
+            "";
+
+          const raceName =
+            item.raceName ??
+            item.name ??
+            "";
+
+          const startTime =
+            item.startTime ??
+            item.time ??
+            "";
+
+          const url =
+            item.startListUrl ??
+            item.raceUrl ??
+            item.url ??
+            "";
+
+          const honmei =
+            item.honmei ??
+            item.main ??
+            item.honmeiText ??
+            "";
+
+          const taikou =
+            item.taikou ??
+            item.second ??
+            item.taikouText ??
+            "";
+
+          const ana =
+            item.ana ??
+            item.third ??
+            item.anaText ??
+            "";
+
+          const cardId =
+            "predictionDetailCard_" + String(raceNumber);
+
+          return (
+            '<article class="prediction-detail-card" id="' +
+              escapeHtml(cardId) +
+            '">' +
+
+              '<div class="prediction-detail-race-head">' +
+
+                '<div class="prediction-detail-race-number">' +
+                  escapeHtml(raceNumber) + 'R' +
+                '</div>' +
+
+                '<div class="prediction-detail-race-info">' +
+
+                  '<div class="prediction-detail-race-name">' +
+                    escapeHtml(raceName) +
+                  '</div>' +
+
+                  '<div class="prediction-detail-race-time">' +
+                    (startTime
+                      ? '発走 ' + escapeHtml(startTime)
+                      : '') +
+                  '</div>' +
+
+                '</div>' +
+
+              '</div>' +
+
+              '<div class="prediction-values">' +
+
+                '<div class="prediction-value-row">' +
+                  '<div class="prediction-mark main">◎</div>' +
+                  '<div class="prediction-label">本命</div>' +
+                  '<div class="prediction-number">' +
+                    escapeHtml(honmei) +
+                  '</div>' +
+                '</div>' +
+
+                '<div class="prediction-value-row">' +
+                  '<div class="prediction-mark second">○</div>' +
+                  '<div class="prediction-label">対抗</div>' +
+                  '<div class="prediction-number">' +
+                    escapeHtml(taikou) +
+                  '</div>' +
+                '</div>' +
+
+                '<div class="prediction-value-row">' +
+                  '<div class="prediction-mark third">▲</div>' +
+                  '<div class="prediction-label">穴</div>' +
+                  '<div class="prediction-number">' +
+                    escapeHtml(ana) +
+                  '</div>' +
+                '</div>' +
+
+              '</div>' +
+
+              (
+                url
+                  ? (
+                    '<a class="start-list-link" href="' +
+                    escapeHtml(url) +
+                    '" target="_blank" rel="noopener noreferrer">' +
+                      '<span class="external-icon">↗</span>' +
+                      '<span>' +
+                        escapeHtml(raceNumber) +
+                        'R の出走表はこちら' +
+                      '</span>' +
+                      '<span class="link-arrow">›</span>' +
+                    '</a>'
+                  )
+                  : ''
+              ) +
+
+            '</article>'
+          );
+
+        }).join("");
+
+      if (selectedRaceNumber !== undefined && selectedRaceNumber !== null) {
+
+        const selected =
+          document.getElementById(
+            "predictionDetailCard_" +
+            String(selectedRaceNumber)
+          );
+
+        if (selected) {
+
+          setTimeout(function() {
+
+            selected.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+
+          }, 100);
+
+        }
+
+      }
+
+    }
+
+
+    function backFromPredictionDetail() {
+
+      document.getElementById("predictionDetailPage").classList.remove("active");
+      document.getElementById("detailPage").classList.add("active");
+
+      window.scrollTo(0, 0);
+
+    }
+
 
 
     function getTodayInJapan() {
