@@ -1460,6 +1460,315 @@
   }
 }
 
+/* ========================================
+   本日の予想画面
+======================================== */
+
+.today-page {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.today-page.active {
+  display: block;
+}
+
+
+/* ヘッダー */
+
+.today-header {
+  width: 100%;
+  padding: 18px 16px 15px;
+  background: linear-gradient(135deg, #d82c78, #e34886);
+  color: #ffffff;
+  text-align: center;
+}
+
+.today-header .main-title {
+  color: #ffffff;
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.today-header .sub-title {
+  margin-top: 5px;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+
+/* コンテンツ */
+
+.today-content {
+  width: 100%;
+  padding: 14px 18px 20px;
+}
+
+.today-prediction-list {
+  width: 100%;
+}
+
+
+/* 予想カード */
+
+.today-prediction-card {
+  width: 100%;
+  margin: 0 0 16px;
+  padding: 0;
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+
+/* レース情報 */
+
+.today-race-header {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: 72px;
+}
+
+.today-race-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  flex-shrink: 0;
+  background: #fff0f6;
+  color: #111111;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.today-race-info {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 10px 8px;
+}
+
+.today-venue {
+  color: #111111;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.today-race-name {
+  margin-top: 3px;
+  color: #111111;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.today-start-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 105px;
+  padding: 8px;
+  color: #111111;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* 本日の予想 */
+
+.today-prediction-box {
+  margin: 0 10px 10px;
+  padding: 9px 9px 10px;
+  border-radius: 9px;
+  background: #fff0f6;
+}
+
+.today-prediction-title {
+  margin-bottom: 7px;
+  color: #d82c78;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+
+/* 本命・対抗・穴 */
+
+.today-prediction-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 38px;
+  margin-top: 5px;
+}
+
+.today-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  flex-shrink: 0;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.honmei-mark {
+  color: #d82c78;
+}
+
+.taikou-mark {
+  color: #666666;
+}
+
+.ana-mark {
+  color: #111111;
+  font-size: 25px;
+}
+
+.today-label {
+  width: 48px;
+  flex-shrink: 0;
+  color: #111111;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.today-number {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+
+/* 出走表リンク */
+
+.today-start-list-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  margin: 0 10px 10px;
+  padding: 0 8px;
+  border: 2px solid #e51f70;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #e51f70;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 800;
+  box-sizing: border-box;
+}
+
+.today-external-icon {
+  margin-right: 7px;
+  font-size: 18px;
+}
+
+.today-link-arrow {
+  margin-left: auto;
+  margin-right: 3px;
+  font-size: 25px;
+  line-height: 1;
+}
+
+
+/* データがない場合 */
+
+.today-empty {
+  padding: 30px 15px;
+  color: #555555;
+  text-align: center;
+  font-size: 15px;
+}
+
+
+/* トップに戻る */
+
+.today-back-button {
+  display: block;
+  width: calc(100% - 36px);
+  min-height: 60px;
+  margin: 8px 18px 28px;
+  border: 3px solid #d82c78;
+  border-radius: 18px;
+  background: #ffffff;
+  color: #d82c78;
+  font-size: 19px;
+  font-weight: 800;
+  cursor: pointer;
+  appearance: none;
+  box-sizing: border-box;
+}
+
+
+/* スマートフォン */
+
+@media (max-width: 600px) {
+
+  .today-header {
+    padding: 16px 12px 13px;
+  }
+
+  .today-header .main-title {
+    font-size: 25px;
+  }
+
+  .today-header .sub-title {
+    font-size: 16px;
+  }
+
+  .today-content {
+    padding: 12px 10px 16px;
+  }
+
+  .today-race-number {
+    width: 68px;
+    font-size: 26px;
+  }
+
+  .today-venue {
+    font-size: 17px;
+  }
+
+  .today-race-name {
+    font-size: 14px;
+  }
+
+  .today-start-time {
+    min-width: 88px;
+    font-size: 13px;
+  }
+
+  .today-prediction-box {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .today-start-list-link {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .today-back-button {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+}
+    
 </style>
 
 </head>
@@ -1804,7 +2113,36 @@
 
 </section>
 
+<!-- ======================================
+     本日の予想画面
+======================================= -->
 
+<section id="todayPage" class="today-page">
+
+  <header class="today-header">
+    <div class="main-title">本日の予想</div>
+    <div class="sub-title" id="todayHeaderDate"></div>
+  </header>
+
+
+  <main class="today-content">
+
+    <div id="todayPredictionList" class="today-prediction-list">
+    </div>
+
+  </main>
+
+
+  <button
+    class="today-back-button"
+    type="button"
+    onclick="backToTopFromToday()"
+  >
+    ← トップに戻る
+  </button>
+
+</section>
+  
   <script>
 
     /*
@@ -2344,6 +2682,304 @@
 
     }
 
+    function renderTodayPredictions(predictions) {
+
+  const list =
+    document.getElementById("todayPredictionList");
+
+  const dateElement =
+    document.getElementById("todayHeaderDate");
+
+
+  if (!list) {
+    return;
+  }
+
+
+  const today =
+    getTodayInJapan();
+
+
+  /*
+   * ヘッダーの日付
+   */
+  if (dateElement) {
+
+    const todayDateObj =
+  new Date(today + "T00:00:00");
+
+const dateText =
+  formatJapaneseDate(
+    today,
+    getJapaneseWeekdayFromDate(todayDateObj)
+  );
+
+    dateElement.textContent =
+      dateText + " の予想";
+
+  }
+
+
+  /*
+   * 今日の予想がない場合
+   */
+  if (!predictions || !predictions.length) {
+
+    list.innerHTML =
+      '<div class="today-empty">' +
+      '本日の予想はまだ公開されていません。' +
+      '</div>';
+
+    return;
+  }
+
+
+  /*
+   * レース番号順に並べる
+   */
+  const sortedPredictions =
+    predictions.slice().sort(
+      function(a, b) {
+
+        const raceA =
+          Number(
+            a.raceNumber ??
+            a.raceNo ??
+            a.race ??
+            0
+          );
+
+        const raceB =
+          Number(
+            b.raceNumber ??
+            b.raceNo ??
+            b.race ??
+            0
+          );
+
+        return raceA - raceB;
+
+      }
+    );
+
+
+  list.innerHTML =
+    sortedPredictions.map(
+      function(item) {
+
+
+        const scheduleId =
+          String(
+            item.scheduleId ??
+            item.id ??
+            ""
+          )
+          .trim()
+          .padStart(3, "0");
+
+
+        /*
+         * 開催情報を取得
+         */
+        const schedule =
+          (window.scheduleData || [])
+            .find(
+              function(scheduleItem) {
+
+                return (
+                  String(
+                    scheduleItem.id ?? ""
+                  )
+                  .trim()
+                  .padStart(3, "0")
+                  ===
+                  scheduleId
+                );
+
+              }
+            );
+
+
+        const venue =
+          schedule
+            ? (
+                schedule.venueText ||
+                schedule.venue ||
+                ""
+              )
+            : "";
+
+
+        const raceNumber =
+          String(
+            item.raceNumber ??
+            item.raceNo ??
+            item.race ??
+            ""
+          ).trim();
+
+
+        const raceName =
+          item.raceName ??
+          item.name ??
+          "";
+
+
+        const startTime =
+          item.startTime ??
+          item.time ??
+          "";
+
+
+        const honmei =
+          item.honmei ??
+          item.main ??
+          item.honmeiText ??
+          "";
+
+
+        const taikou =
+          item.taikou ??
+          item.second ??
+          item.taikouText ??
+          "";
+
+
+        const ana =
+          item.ana ??
+          item.third ??
+          item.anaText ??
+          "";
+
+
+        const url =
+          item.startListUrl ??
+          item.raceUrl ??
+          item.entryUrl ??
+          item.url ??
+          "";
+
+
+        return (
+
+          '<div class="today-prediction-card">' +
+
+
+            '<div class="today-race-header">' +
+
+              '<div class="today-race-number">' +
+                escapeHtml(raceNumber) +
+                'R' +
+              '</div>' +
+
+
+              '<div class="today-race-info">' +
+
+                '<div class="today-venue">' +
+                  escapeHtml(venue) +
+                '</div>' +
+
+                '<div class="today-race-name">' +
+                  escapeHtml(raceName) +
+                '</div>' +
+
+              '</div>' +
+
+
+              '<div class="today-start-time">' +
+                (startTime
+                  ? '発走 ' + escapeHtml(startTime)
+                  : '') +
+              '</div>' +
+
+            '</div>' +
+
+
+            '<div class="today-prediction-box">' +
+
+              '<div class="today-prediction-title">' +
+                '◎ 本日の予想' +
+              '</div>' +
+
+
+              '<div class="today-prediction-row">' +
+
+                '<div class="today-mark honmei-mark">◎</div>' +
+
+                '<div class="today-label">本命</div>' +
+
+                '<div class="today-number">' +
+                  escapeHtml(honmei) +
+                '</div>' +
+
+              '</div>' +
+
+
+              '<div class="today-prediction-row">' +
+
+                '<div class="today-mark taikou-mark">○</div>' +
+
+                '<div class="today-label">対抗</div>' +
+
+                '<div class="today-number">' +
+                  escapeHtml(taikou) +
+                '</div>' +
+
+              '</div>' +
+
+
+              '<div class="today-prediction-row">' +
+
+                '<div class="today-mark ana-mark">▲</div>' +
+
+                '<div class="today-label">穴</div>' +
+
+                '<div class="today-number">' +
+                  escapeHtml(ana) +
+                '</div>' +
+
+              '</div>' +
+
+            '</div>' +
+
+
+            (
+              url
+                ? (
+
+                  '<a' +
+                    ' class="today-start-list-link"' +
+                    ' href="' +
+                      escapeHtml(url) +
+                    '"' +
+                    ' target="_blank"' +
+                    ' rel="noopener noreferrer"' +
+                  '>' +
+
+                    '<span class="today-external-icon">↗</span>' +
+
+                    '<span>' +
+                      escapeHtml(raceNumber) +
+                      'Rの出走表はこちら' +
+                    '</span>' +
+
+                    '<span class="today-link-arrow">›</span>' +
+
+                  '</a>'
+
+                )
+                : ''
+            ) +
+
+
+          '</div>'
+
+        );
+
+      }
+    ).join("");
+
+}
 
     function openPredictionDetail(scheduleId, predictionDate, raceNumber) {
 
@@ -2996,14 +3632,169 @@ function openCurrent() {
 }
 
 
-    function openToday() {
+function openToday() {
+
+  const today = getTodayInJapan();
+
+  const callbackName =
+    "todayCallback_" + Date.now();
+
+
+  window[callbackName] =
+    function(response) {
+
+      try {
+
+        if (
+          !response ||
+          response.success !== true
+        ) {
+          throw new Error(
+            response && response.error
+              ? response.error
+              : "データ取得に失敗しました。"
+          );
+        }
+
+
+        window.scheduleData =
+          response.schedules || [];
+
+        window.featuredRidersData =
+          response.featuredRiders || [];
+
+        window.dailyPredictionsData =
+          response.dailyPredictions ||
+          response.predictions ||
+          [];
+
+
+        const todayPredictions =
+          window.dailyPredictionsData.filter(
+            function(item) {
+
+              const predictionDate =
+                normalizeDateString(
+                  item.predictionDate ??
+                  item.date ??
+                  item.yosobi ??
+                  ""
+                );
+
+              return predictionDate === today;
+
+            }
+          );
+
+
+        document.querySelector(".app").style.display = "none";
+
+        document.getElementById("schedulePage")
+          .classList.remove("active");
+
+        document.getElementById("detailPage")
+          .classList.remove("active");
+
+        document.getElementById("predictionDetailPage")
+          .classList.remove("active");
+
+
+        const todayPage =
+          document.getElementById("todayPage");
+
+
+        if (!todayPage) {
+          throw new Error(
+            "本日の予想画面が見つかりません。"
+          );
+        }
+
+
+        todayPage.classList.add("active");
+
+
+        renderTodayPredictions(
+          todayPredictions
+        );
+
+
+        window.scrollTo(0, 0);
+
+
+      } catch (error) {
+
+        console.error(
+          "openToday error:",
+          error
+        );
+
+        alert(
+          "本日の予想を取得できませんでした。"
+        );
+
+      } finally {
+
+        delete window[callbackName];
+
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
+
+      }
+
+    };
+
+
+  const script =
+    document.createElement("script");
+
+
+  script.src =
+    GAS_API_URL +
+    "?callback=" +
+    encodeURIComponent(callbackName);
+
+
+  script.onerror =
+    function() {
 
       alert(
-        "本日の予想は次の工程で作成します。"
+        "本日の予想を取得できませんでした。"
       );
 
-    }
+      delete window[callbackName];
 
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+
+    };
+
+
+  document.body.appendChild(script);
+
+}    
+
+    function backToTopFromToday() {
+
+  document
+    .getElementById("todayPage")
+    .classList.remove("active");
+
+
+  document
+    .querySelector(".app")
+    .style.display = "block";
+
+
+  document
+    .getElementById("topPage")
+    .style.display = "block";
+
+
+  window.scrollTo(0, 0);
+
+}
 
     function openResults() {
 
