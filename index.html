@@ -4776,6 +4776,44 @@ function formatResultsRate(value) {
 
 }
 
+function backToTopFromResults() {
+
+  document
+    .getElementById("resultsPage")
+    .classList.remove("active");
+
+  document
+    .getElementById("todayPage")
+    .classList.remove("active");
+
+  document
+    .getElementById("schedulePage")
+    .classList.remove("active");
+
+  document
+    .getElementById("detailPage")
+    .classList.remove("active");
+
+  document
+    .getElementById("predictionDetailPage")
+    .classList.remove("active");
+
+  document
+    .querySelector(".app")
+    .style.display = "block";
+
+  document
+    .getElementById("topPage")
+    .style.display = "block";
+
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto"
+  });
+
+}    
+    
   </script>
 
 
