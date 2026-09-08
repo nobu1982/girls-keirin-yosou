@@ -4813,6 +4813,47 @@ function backToTopFromResults() {
   });
 
 }    
+
+// ========================================
+// 予想実績：月切り替え
+// ========================================
+
+let resultsCurrentMonth = new Date(2026, 7, 1);
+
+function updateResultsMonth() {
+  const year = resultsCurrentMonth.getFullYear();
+  const month = resultsCurrentMonth.getMonth() + 1;
+
+  document.getElementById("resultsMonth").textContent =
+    year + "年" + month + "月";
+
+  window.resultsCurrentMonth =
+    year + "-" + String(month).padStart(2, "0");
+
+  renderResults();
+}
+document
+  .getElementById("resultsPrevMonth")
+  .addEventListener("click", function() {
+
+    resultsCurrentMonth.setMonth(
+      resultsCurrentMonth.getMonth() - 1
+    );
+
+    updateResultsMonth();
+  });
+
+document
+  .getElementById("resultsNextMonth")
+  .addEventListener("click", function() {
+
+    resultsCurrentMonth.setMonth(
+      resultsCurrentMonth.getMonth() + 1
+    );
+
+    updateResultsMonth();
+  });
+
     
   </script>
 
