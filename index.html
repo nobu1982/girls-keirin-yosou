@@ -2840,14 +2840,69 @@
 
     }
 
+function openCurrent() {
 
-    function openCurrent() {
+  const today = getTodayInJapan();
 
-      alert(
-        "現在開催中の情報は次の工程で作成します。"
+  const currentSchedule =
+    (window.scheduleData || []).find(function(schedule) {
+
+      return (
+        today >= schedule.startDate &&
+        today <= schedule.endDate
       );
 
-    }
+    });
+
+
+  if (!currentSchedule) {
+
+    alert(
+      "現在開催中の開催はありません。"
+    );
+
+    return;
+  }
+
+
+  document.querySelector(".app").style.display = "none";
+
+  document.getElementById("schedulePage").classList.remove("active");
+
+  document.getElementById("detailPage").classList.add("active");
+
+
+  document.getElementById("detailHeaderTitle").textContent =
+    currentSchedule.venueText;
+
+
+  document.getElementById("detailHeaderPeriod").textContent =
+    formatJapaneseDate(
+      currentSchedule.startDate,
+      currentSchedule.startWeekday
+    ) +
+    "～" +
+    formatJapaneseDate(
+      currentSchedule.endDate,
+      currentSchedule.endWeekday
+    ) +
+    " 開催";
+
+
+  renderFeaturedRiders(
+    currentSchedule.id
+  );
+
+
+  renderDailyPredictions(
+    currentSchedule
+  );
+
+
+  window.scrollTo(0, 0);
+
+}
+    
 
 
     function openToday() {
