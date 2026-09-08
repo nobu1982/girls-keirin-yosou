@@ -2844,65 +2844,156 @@ function openCurrent() {
 
   const today = getTodayInJapan();
 
-  const currentSchedule =
-    (window.scheduleData || []).find(function(schedule) {
+  const callbackName =
+    "currentCallback_" + Date.now();
 
-      return (
-        today >= schedule.startDate &&
-        today <= schedule.endDate
+
+  window[callbackName] =
+    function(response) {
+
+      try {
+
+        if (
+          !response ||
+          response.success !== true
+        ) {
+          throw new Error(
+            response && response.error
+              ? response.error
+              : "データ取得に失敗しました。"
+          );
+        }
+
+
+        window.scheduleData =
+          response.schedules || [];
+
+        window.featuredRidersData =
+          response.featuredRiders || [];
+
+        window.dailyPredictionsData =
+          response.dailyPredictions ||
+          response.predictions ||
+          [];
+
+
+        const currentSchedule =
+          window.scheduleData.find(
+            function(schedule) {
+
+              return (
+                today >= schedule.startDate &&
+                today <= schedule.endDate
+              );
+
+            }
+          );
+
+
+        if (!currentSchedule) {
+
+          alert(
+            "現在開催中の開催はありません。"
+          );
+
+          return;
+        }
+
+
+        document.querySelector(".app").style.display = "none";
+
+        document.getElementById("schedulePage")
+          .classList.remove("active");
+
+        document.getElementById("detailPage")
+          .classList.add("active");
+
+
+        document.getElementById("detailHeaderTitle")
+          .textContent =
+          currentSchedule.venueText;
+
+
+        document.getElementById("detailHeaderPeriod")
+          .textContent =
+          formatJapaneseDate(
+            currentSchedule.startDate,
+            currentSchedule.startWeekday
+          ) +
+          "～" +
+          formatJapaneseDate(
+            currentSchedule.endDate,
+            currentSchedule.endWeekday
+          ) +
+          " 開催";
+
+
+        renderFeaturedRiders(
+          currentSchedule.id
+        );
+
+
+        renderDailyPredictions(
+          currentSchedule
+        );
+
+
+        window.scrollTo(0, 0);
+
+
+      } catch (error) {
+
+        console.error(
+          "openCurrent error:",
+          error
+        );
+
+        alert(
+          "現在開催中の情報を取得できませんでした。"
+        );
+
+      } finally {
+
+        delete window[callbackName];
+
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
+
+      }
+
+    };
+
+
+  const script =
+    document.createElement("script");
+
+
+  script.src =
+    GAS_API_URL +
+    "?callback=" +
+    encodeURIComponent(callbackName);
+
+
+  script.onerror =
+    function() {
+
+      alert(
+        "現在開催中の情報を取得できませんでした。"
       );
 
-    });
+      delete window[callbackName];
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+
+    };
 
 
-  if (!currentSchedule) {
-
-    alert(
-      "現在開催中の開催はありません。"
-    );
-
-    return;
-  }
-
-
-  document.querySelector(".app").style.display = "none";
-
-  document.getElementById("schedulePage").classList.remove("active");
-
-  document.getElementById("detailPage").classList.add("active");
-
-
-  document.getElementById("detailHeaderTitle").textContent =
-    currentSchedule.venueText;
-
-
-  document.getElementById("detailHeaderPeriod").textContent =
-    formatJapaneseDate(
-      currentSchedule.startDate,
-      currentSchedule.startWeekday
-    ) +
-    "～" +
-    formatJapaneseDate(
-      currentSchedule.endDate,
-      currentSchedule.endWeekday
-    ) +
-    " 開催";
-
-
-  renderFeaturedRiders(
-    currentSchedule.id
-  );
-
-
-  renderDailyPredictions(
-    currentSchedule
-  );
-
-
-  window.scrollTo(0, 0);
+  document.body.appendChild(script);
 
 }
-    
 
 
     function openToday() {
