@@ -2422,231 +2422,307 @@
 
     function renderPredictionDetail(schedule, targetDate, selectedRaceNumber) {
 
-      const list =
-        document.getElementById("predictionDetailList");
+  const list =
+    document.getElementById("predictionDetailList");
 
-      if (!list) {
-        return;
-      }
+  if (!list) {
+    return;
+  }
 
-      const targetScheduleId =
-        String(schedule.id).trim().padStart(3, "0");
 
-      let predictions =
-        (window.dailyPredictionsData || [])
-          .filter(function(item) {
+  const targetScheduleId =
+    String(schedule.id)
+      .trim()
+      .padStart(3, "0");
 
-            const itemScheduleId =
-              String(
-                item.scheduleId ??
-                item.id ??
-                ""
-              ).trim().padStart(3, "0");
 
-            const itemDate =
-              normalizeDateString(
-                item.predictionDate ??
-                item.date ??
-                item.yosobi ??
-                ""
-              );
+  /*
+   * 開催ID・予想日で絞り込み
+   */
+  let predictions =
+    (window.dailyPredictionsData || [])
+      .filter(function(item) {
 
-            return (
-              itemScheduleId === targetScheduleId &&
-              itemDate === targetDate
-            );
+        const itemScheduleId =
+          String(
+            item.scheduleId ??
+            item.id ??
+            ""
+          )
+          .trim()
+          .padStart(3, "0");
 
-          })
-          .sort(function(a, b) {
 
-            return Number(
-              a.raceNumber ??
-              a.raceNo ??
-              a.race ??
-              0
-            ) -
-            Number(
-              b.raceNumber ??
-              b.raceNo ??
-              b.race ??
-              0
-            );
+        const itemDate =
+          normalizeDateString(
+            item.predictionDate ??
+            item.date ??
+            item.yosobi ??
+            ""
+          );
 
-          });
 
-      if (!predictions.length) {
-
-        list.innerHTML =
-          '<div class="prediction-detail-empty">' +
-          'この日の予想はまだ公開されていません。' +
-          '</div>';
-
-        return;
-      }
-
-      /*
-       * 参考画像と同じく、その日の予想レースを縦に並べます。
-       * 「予想を見る」を押したレースがある場合は、
-       * そのレースへ自動スクロールします。
-       */
-
-      list.innerHTML =
-        predictions.map(function(item, index) {
-
-          const raceNumber =
+        /*
+         * 選択されたレース番号
+         */
+        const itemRaceNumber =
+          String(
             item.raceNumber ??
             item.raceNo ??
             item.race ??
-            "";
+            ""
+          ).trim();
 
-          const raceName =
-            item.raceName ??
-            item.name ??
-            "";
 
-          const startTime =
-            item.startTime ??
-            item.time ??
-            "";
+        const selectedRace =
+          String(
+            selectedRaceNumber ?? ""
+          ).trim();
 
-          const url =
-            item.startListUrl ??
-            item.raceUrl ??
-            item.url ??
-            "";
 
-          const honmei =
-            item.honmei ??
-            item.main ??
-            item.honmeiText ??
-            "";
+        /*
+         * 開催ID・予想日が一致
+         *
+         * さらに「予想を見る」から来た場合は
+         * 選択したレース番号だけ表示
+         */
+        return (
+          itemScheduleId === targetScheduleId &&
+          itemDate === targetDate &&
+          (
+            selectedRace === "" ||
+            itemRaceNumber === selectedRace
+          )
+        );
 
-          const taikou =
-            item.taikou ??
-            item.second ??
-            item.taikouText ??
-            "";
+      });
 
-          const ana =
-            item.ana ??
-            item.third ??
-            item.anaText ??
-            "";
 
-          const cardId =
-            "predictionDetailCard_" + String(raceNumber);
+  /*
+   * レース番号順
+   */
+  predictions.sort(function(a, b) {
 
-          return (
-            '<article class="prediction-detail-card" id="' +
-              escapeHtml(cardId) +
-            '">' +
+    return Number(
+      a.raceNumber ??
+      a.raceNo ??
+      a.race ??
+      0
+    ) -
+    Number(
+      b.raceNumber ??
+      b.raceNo ??
+      b.race ??
+      0
+    );
 
-              '<div class="prediction-detail-race-head">' +
+  });
 
-                '<div class="prediction-detail-race-number">' +
-                  escapeHtml(raceNumber) + 'R' +
-                '</div>' +
 
-                '<div class="prediction-detail-race-info">' +
+  /*
+   * データがない場合
+   */
+  if (!predictions.length) {
 
-                  '<div class="prediction-detail-race-name">' +
-                    escapeHtml(raceName) +
-                  '</div>' +
+    list.innerHTML =
+      '<div class="prediction-detail-empty">' +
+      'このレースの予想はまだ公開されていません。' +
+      '</div>';
 
-                  '<div class="prediction-detail-race-time">' +
-                    (startTime
-                      ? '発走 ' + escapeHtml(startTime)
-                      : '') +
-                  '</div>' +
+    return;
+  }
 
-                '</div>' +
 
+  /*
+   * 選択されたレースだけ表示
+   */
+  list.innerHTML =
+    predictions.map(function(item) {
+
+      const raceNumber =
+        item.raceNumber ??
+        item.raceNo ??
+        item.race ??
+        "";
+
+
+      const raceName =
+        item.raceName ??
+        item.name ??
+        "";
+
+
+      const startTime =
+        item.startTime ??
+        item.time ??
+        "";
+
+
+      const url =
+        item.startListUrl ??
+        item.raceUrl ??
+        item.url ??
+        "";
+
+
+      const honmei =
+        item.honmei ??
+        item.main ??
+        item.honmeiText ??
+        "";
+
+
+      const taikou =
+        item.taikou ??
+        item.second ??
+        item.taikouText ??
+        "";
+
+
+      const ana =
+        item.ana ??
+        item.third ??
+        item.anaText ??
+        "";
+
+
+      return (
+
+        '<article class="prediction-detail-card">' +
+
+          /*
+           * レース情報
+           */
+          '<div class="prediction-detail-race-head">' +
+
+            '<div class="prediction-detail-race-number">' +
+              escapeHtml(raceNumber) + 'R' +
+            '</div>' +
+
+            '<div class="prediction-detail-race-info">' +
+
+              '<div class="prediction-detail-race-name">' +
+                escapeHtml(raceName) +
               '</div>' +
 
-              '<div class="prediction-values">' +
-
-                '<div class="prediction-value-row">' +
-                  '<div class="prediction-mark main">◎</div>' +
-                  '<div class="prediction-label">本命</div>' +
-                  '<div class="prediction-number">' +
-                    escapeHtml(honmei) +
-                  '</div>' +
-                '</div>' +
-
-                '<div class="prediction-value-row">' +
-                  '<div class="prediction-mark second">○</div>' +
-                  '<div class="prediction-label">対抗</div>' +
-                  '<div class="prediction-number">' +
-                    escapeHtml(taikou) +
-                  '</div>' +
-                '</div>' +
-
-                '<div class="prediction-value-row">' +
-                  '<div class="prediction-mark third">▲</div>' +
-                  '<div class="prediction-label">穴</div>' +
-                  '<div class="prediction-number">' +
-                    escapeHtml(ana) +
-                  '</div>' +
-                '</div>' +
-
+              '<div class="prediction-detail-race-time">' +
+                (
+                  startTime
+                    ? '発走 ' + escapeHtml(startTime)
+                    : ''
+                ) +
               '</div>' +
 
-              (
-                url
-                  ? (
-                    '<a class="start-list-link" href="' +
-                    escapeHtml(url) +
-                    '" target="_blank" rel="noopener noreferrer">' +
-                      '<span class="external-icon">↗</span>' +
-                      '<span>' +
-                        escapeHtml(raceNumber) +
-                        'R の出走表はこちら' +
-                      '</span>' +
-                      '<span class="link-arrow">›</span>' +
-                    '</a>'
-                  )
-                  : ''
-              ) +
+            '</div>' +
 
-            '</article>'
-          );
+          '</div>' +
 
-        }).join("");
 
-      if (selectedRaceNumber !== undefined && selectedRaceNumber !== null) {
+          /*
+           * 予想
+           */
+          '<div class="prediction-values">' +
 
-        const selected =
-          document.getElementById(
-            "predictionDetailCard_" +
-            String(selectedRaceNumber)
-          );
+            '<div class="prediction-value-row">' +
 
-        if (selected) {
+              '<div class="prediction-mark main">◎</div>' +
 
-          setTimeout(function() {
+              '<div class="prediction-label">本命</div>' +
 
-            selected.scrollIntoView({
-              behavior: "smooth",
-              block: "start"
-            });
+              '<div class="prediction-number">' +
+                escapeHtml(honmei) +
+              '</div>' +
 
-          }, 100);
+            '</div>' +
 
-        }
 
-      }
+            '<div class="prediction-value-row">' +
+
+              '<div class="prediction-mark second">○</div>' +
+
+              '<div class="prediction-label">対抗</div>' +
+
+              '<div class="prediction-number">' +
+                escapeHtml(taikou) +
+              '</div>' +
+
+            '</div>' +
+
+
+            '<div class="prediction-value-row">' +
+
+              '<div class="prediction-mark third">▲</div>' +
+
+              '<div class="prediction-label">穴</div>' +
+
+              '<div class="prediction-number">' +
+                escapeHtml(ana) +
+              '</div>' +
+
+            '</div>' +
+
+          '</div>' +
+
+
+          /*
+           * 出走表
+           */
+          (
+            url
+              ? (
+
+                '<a class="start-list-link" href="' +
+                  escapeHtml(url) +
+                  '" target="_blank" rel="noopener noreferrer">' +
+
+                  '<span class="external-icon">↗</span>' +
+
+                  '<span>' +
+                    escapeHtml(raceNumber) +
+                    'R の出走表はこちら' +
+                  '</span>' +
+
+                  '<span class="link-arrow">›</span>' +
+
+                '</a>'
+
+              )
+              : ''
+          ) +
+
+        '</article>'
+
+      );
+
+    }).join("");
 
     }
-
 
     function backFromPredictionDetail() {
 
-      document.getElementById("predictionDetailPage").classList.remove("active");
-      document.getElementById("detailPage").classList.add("active");
+  document
+    .getElementById("predictionDetailPage")
+    .classList.remove("active");
 
-      window.scrollTo(0, 0);
+  document
+    .getElementById("detailPage")
+    .classList.remove("active");
 
-    }
+  document
+    .getElementById("schedulePage")
+    .classList.remove("active");
+
+  document
+    .querySelector(".app")
+    .style.display = "block";
+
+  document
+    .getElementById("topPage")
+    .style.display = "block";
+
+  window.scrollTo(0, 0);
+
+}
 
 
 
