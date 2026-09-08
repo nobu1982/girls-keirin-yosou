@@ -1768,6 +1768,353 @@
   }
 
 }
+
+/* ========================================
+   予想実績画面
+======================================== */
+
+.results-page {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.results-page.active {
+  display: block;
+}
+
+
+/* ヘッダー */
+
+.results-header {
+  width: 100%;
+  padding: 16px 12px 14px;
+  background: linear-gradient(135deg, #d82c78, #e34886);
+  color: #ffffff;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.results-title {
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+
+/* 月切り替え */
+
+.results-month-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.results-month-button {
+  width: 36px;
+  height: 42px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+}
+
+#resultsMonth {
+  min-width: 170px;
+  padding: 7px 20px;
+  border-radius: 24px;
+  background: #ffffff;
+  color: #d82c78;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+
+
+/* 本文 */
+
+.results-content {
+  width: 100%;
+  padding: 12px 10px 20px;
+  box-sizing: border-box;
+}
+
+
+/* 集計 */
+
+.results-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  margin-bottom: 18px;
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.results-summary-item {
+  min-height: 92px;
+  padding: 10px 5px;
+  border-right: 1px solid #eeeeee;
+  background: #fff8fb;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.results-summary-item:last-child {
+  border-right: none;
+}
+
+.results-summary-item > div {
+  color: #222222;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.results-summary-item strong {
+  display: inline-block;
+  margin-top: 5px;
+  color: #d82c78;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.results-summary-item span {
+  margin-left: 2px;
+  color: #d82c78;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+
+/* セクション */
+
+.results-section {
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+.results-section h2 {
+  margin: 0 0 9px;
+  padding-left: 4px;
+  color: #d82c78;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+
+/* 開催別実績 */
+
+.results-event-card {
+  width: 100%;
+  margin-bottom: 7px;
+  padding: 10px 12px;
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+}
+
+.results-event-name {
+  margin-bottom: 7px;
+  color: #222222;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.results-event-period {
+  margin-bottom: 8px;
+  color: #555555;
+  font-size: 12px;
+}
+
+.results-event-data {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+  border-top: 1px solid #eeeeee;
+}
+
+.results-event-data-item {
+  padding: 6px 2px;
+  border-right: 1px solid #eeeeee;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.results-event-data-item:last-child {
+  border-right: none;
+}
+
+.results-event-data-item .label {
+  display: block;
+  color: #555555;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.results-event-data-item .value {
+  display: block;
+  margin-top: 3px;
+  color: #222222;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.results-event-data-item.hit .value {
+  color: #d82c78;
+}
+
+
+/* 的中率 */
+
+.results-event-rate {
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid #eeeeee;
+  color: #d82c78;
+  text-align: right;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+
+/* 的中レース一覧 */
+
+.results-hit-race-card {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  min-height: 48px;
+  margin-bottom: 5px;
+  padding: 7px 9px;
+  border: 1px solid #eeeeee;
+  border-radius: 8px;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.results-hit-star {
+  color: #f2a000;
+  font-size: 17px;
+  text-align: center;
+}
+
+.results-hit-info {
+  min-width: 0;
+}
+
+.results-hit-name {
+  color: #222222;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.results-hit-date {
+  margin-top: 2px;
+  color: #555555;
+  font-size: 11px;
+}
+
+.results-hit-type {
+  color: #d82c78;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.results-hit-payout {
+  color: #d82c78;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+
+/* データなし */
+
+.results-empty {
+  padding: 25px 10px;
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+  background: #fff8fb;
+  color: #666666;
+  text-align: center;
+  font-size: 14px;
+}
+
+
+/* トップに戻る */
+
+.results-back-button {
+  display: block;
+  width: calc(100% - 24px);
+  min-height: 58px;
+  margin: 8px 12px 25px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #d82c78, #e34886);
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 800;
+  cursor: pointer;
+  appearance: none;
+  box-sizing: border-box;
+}
+
+
+/* スマートフォン */
+
+@media (max-width: 600px) {
+
+  .results-title {
+    font-size: 24px;
+  }
+
+  .results-month-selector {
+    gap: 12px;
+  }
+
+  #resultsMonth {
+    min-width: 155px;
+    font-size: 18px;
+  }
+
+  .results-summary-item {
+    min-height: 85px;
+  }
+
+  .results-summary-item strong {
+    font-size: 30px;
+  }
+
+  .results-event-data-item .label {
+    font-size: 9px;
+  }
+
+  .results-event-data-item .value {
+    font-size: 14px;
+  }
+
+}    
     
 </style>
 
@@ -2137,6 +2484,101 @@
     class="today-back-button"
     type="button"
     onclick="backToTopFromToday()"
+  >
+    ← トップに戻る
+  </button>
+
+</section>
+
+  <!-- ========================================
+     予想実績画面
+======================================== -->
+
+<section id="resultsPage" class="results-page">
+
+  <header class="results-header">
+
+    <div class="results-title">
+      予想実績
+    </div>
+
+    <div class="results-month-selector">
+
+      <button
+        type="button"
+        id="resultsPrevMonth"
+        class="results-month-button"
+      >
+        ‹
+      </button>
+
+      <div id="resultsMonth">
+        2026年8月
+      </div>
+
+      <button
+        type="button"
+        id="resultsNextMonth"
+        class="results-month-button"
+      >
+        ›
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main class="results-content">
+
+    <section class="results-summary">
+
+      <div class="results-summary-item">
+        <div>予想レース数</div>
+        <strong id="resultsPredictionCount">0</strong>
+        <span>R</span>
+      </div>
+
+      <div class="results-summary-item">
+        <div>的中レース数</div>
+        <strong id="resultsHitCount">0</strong>
+        <span>R</span>
+      </div>
+
+      <div class="results-summary-item">
+        <div>的中率</div>
+        <strong id="resultsHitRate">0.0%</strong>
+      </div>
+
+    </section>
+
+
+    <section class="results-section">
+
+      <h2>🚩 開催別実績</h2>
+
+      <div id="resultsEventList">
+      </div>
+
+    </section>
+
+
+    <section class="results-section">
+
+      <h2>🏆 的中レース一覧</h2>
+
+      <div id="resultsHitRaceList">
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <button
+    class="results-back-button"
+    type="button"
+    onclick="backToTopFromResults()"
   >
     ← トップに戻る
   </button>
@@ -3796,13 +4238,514 @@ function openToday() {
 
 }
 
-    function openResults() {
+   function openResults() {
+
+  let script = null;
+
+  const callbackName =
+    "resultsCallback_" + Date.now();
+
+  window[callbackName] =
+    function(response) {
+
+      try {
+
+        if (
+          !response ||
+          response.success !== true
+        ) {
+          throw new Error(
+            response && response.error
+              ? response.error
+              : "データ取得に失敗しました。"
+          );
+        }
+
+
+        /*
+         * GASから実績データを受け取る
+         */
+
+        window.resultsData =
+          response.results || [];
+
+        window.hitRacesData =
+          response.hitRaces || [];
+
+
+        /*
+         * トップ画面を隠す
+         */
+
+        document
+          .getElementById("topPage")
+          .style.display = "none";
+
+
+        document
+          .querySelector(".app")
+          .style.display = "block";
+
+
+        /*
+         * 予想実績画面を表示
+         */
+
+        const resultsPage =
+          document.getElementById("resultsPage");
+
+
+        if (!resultsPage) {
+
+          alert(
+            "予想実績画面を表示できません。"
+          );
+
+          return;
+
+        }
+
+
+        resultsPage.classList.add("active");
+
+
+        /*
+         * 初期表示は2026年8月
+         */
+
+        window.resultsCurrentMonth =
+          "2026-08";
+
+
+        /*
+         * 実績を表示
+         */
+
+        renderResults();
+
+
+        window.scrollTo(0, 0);
+
+
+      } catch (error) {
+
+        console.error(
+          "openResults error:",
+          error
+        );
+
+        alert(
+          "予想実績を取得できませんでした。"
+        );
+
+      } finally {
+
+        delete window[callbackName];
+
+        if (
+          script &&
+          script.parentNode
+        ) {
+          script.parentNode.removeChild(script);
+        }
+
+      }
+
+    };
+
+
+  script =
+  document.createElement("script");
+
+
+  script.src =
+    GAS_API_URL +
+    "?callback=" +
+    encodeURIComponent(callbackName);
+
+
+  script.onerror =
+    function() {
 
       alert(
-        "予想実績は次の工程で作成します。"
+        "予想実績を取得できませんでした。"
       );
 
-    }
+      delete window[callbackName];
+
+      if (
+        script.parentNode
+      ) {
+        script.parentNode.removeChild(script);
+      }
+
+    };
+
+
+  document.body.appendChild(script);
+
+}
+
+    function renderResults() {
+
+  const results =
+    window.resultsData || [];
+
+  const hitRaces =
+    window.hitRacesData || [];
+
+  const monthElement =
+    document.getElementById("resultsMonth");
+
+  const eventList =
+    document.getElementById("resultsEventList");
+
+  const hitRaceList =
+    document.getElementById("resultsHitRaceList");
+
+  if (!monthElement || !eventList || !hitRaceList) {
+    return;
+  }
+
+
+  const currentMonth =
+    window.resultsCurrentMonth || "2026-08";
+
+  const monthParts =
+    currentMonth.split("-");
+
+  const year =
+    Number(monthParts[0]);
+
+  const month =
+    Number(monthParts[1]);
+
+
+  monthElement.textContent =
+    year + "年" + month + "月";
+
+
+  const monthStart =
+    currentMonth + "-01";
+
+  const nextMonthDate =
+    new Date(year, month, 1);
+
+  const nextYear =
+    nextMonthDate.getFullYear();
+
+  const nextMonth =
+    String(
+      nextMonthDate.getMonth() + 1
+    ).padStart(2, "0");
+
+  const monthEnd =
+    nextYear +
+    "-" +
+    nextMonth +
+    "-01";
+
+
+  /*
+   * 開催別実績
+   */
+
+  const monthResults =
+    results.filter(function(item) {
+
+      return (
+        item.startDate < monthEnd &&
+        item.endDate >= monthStart
+      );
+
+    });
+
+
+  let predictionCount = 0;
+  let hitCount = 0;
+  let honmeiCount = 0;
+  let taikouCount = 0;
+  let anaCount = 0;
+
+
+  monthResults.forEach(function(item) {
+
+    predictionCount +=
+      Number(item.predictionRaces) || 0;
+
+    hitCount +=
+      Number(item.hitRaces) || 0;
+
+    honmeiCount +=
+      Number(item.honmei) || 0;
+
+    taikouCount +=
+      Number(item.taikou) || 0;
+
+    anaCount +=
+      Number(item.ana) || 0;
+
+  });
+
+
+  const predictionElement =
+    document.getElementById(
+      "resultsPredictionCount"
+    );
+
+  const hitElement =
+    document.getElementById(
+      "resultsHitCount"
+    );
+
+  const rateElement =
+    document.getElementById(
+      "resultsHitRate"
+    );
+
+
+  if (predictionElement) {
+
+    predictionElement.textContent =
+      predictionCount;
+
+  }
+
+
+  if (hitElement) {
+
+    hitElement.textContent =
+      hitCount;
+
+  }
+
+
+  if (rateElement) {
+
+    const rate =
+      predictionCount > 0
+        ? (
+            hitCount /
+            predictionCount *
+            100
+          ).toFixed(1)
+        : "0.0";
+
+    rateElement.textContent =
+      rate + "%";
+
+  }
+
+
+  /*
+   * 開催別実績一覧
+   */
+
+  if (!monthResults.length) {
+
+    eventList.innerHTML =
+      '<div class="results-empty">' +
+      'この月の実績はありません。' +
+      '</div>';
+
+  } else {
+
+    eventList.innerHTML =
+      monthResults.map(function(item) {
+
+        return (
+
+          '<div class="results-event-card">' +
+
+            '<div class="results-event-name">' +
+              escapeHtml(item.venue) +
+            '</div>' +
+
+            '<div class="results-event-period">' +
+              escapeHtml(
+                formatResultsPeriod(
+                  item.startDate,
+                  item.endDate
+                )
+              ) +
+            '</div>' +
+
+            '<div class="results-event-data">' +
+
+              '<div class="results-event-data-item">' +
+                '<span class="label">予想</span>' +
+                '<span class="value">' +
+                  Number(item.predictionRaces || 0) +
+                  'R' +
+                '</span>' +
+              '</div>' +
+
+              '<div class="results-event-data-item hit">' +
+                '<span class="label">★ 本命</span>' +
+                '<span class="value">' +
+                  Number(item.honmei || 0) +
+                '</span>' +
+              '</div>' +
+
+              '<div class="results-event-data-item hit">' +
+                '<span class="label">○ 対抗</span>' +
+                '<span class="value">' +
+                  Number(item.taikou || 0) +
+                '</span>' +
+              '</div>' +
+
+              '<div class="results-event-data-item hit">' +
+                '<span class="label">▲ 穴狙い</span>' +
+                '<span class="value">' +
+                  Number(item.ana || 0) +
+                '</span>' +
+              '</div>' +
+
+              '<div class="results-event-data-item hit">' +
+                '<span class="label">的中</span>' +
+                '<span class="value">' +
+                  Number(item.hitRaces || 0) +
+                '</span>' +
+              '</div>' +
+
+            '</div>' +
+
+            '<div class="results-event-rate">' +
+              '的中率 ' +
+              escapeHtml(
+                formatResultsRate(item.hitRate)
+              ) +
+            '</div>' +
+
+          '</div>'
+
+        );
+
+      }).join("");
+
+  }
+
+
+  /*
+   * 的中レース一覧
+   */
+
+  const monthHitRaces =
+    hitRaces.filter(function(item) {
+
+      return (
+        item.date >= monthStart &&
+        item.date < monthEnd
+      );
+
+    });
+
+
+  if (!monthHitRaces.length) {
+
+    hitRaceList.innerHTML =
+      '<div class="results-empty">' +
+      'この月の的中レースはありません。' +
+      '</div>';
+
+  } else {
+
+    hitRaceList.innerHTML =
+      monthHitRaces.map(function(item) {
+
+        return (
+
+          '<div class="results-hit-race-card">' +
+
+            '<div class="results-hit-star">★</div>' +
+
+            '<div class="results-hit-info">' +
+
+              '<div class="results-hit-name">' +
+                escapeHtml(item.venue) +
+              '</div>' +
+
+              '<div class="results-hit-date">' +
+                escapeHtml(
+                  formatResultsDate(item.date)
+                ) +
+                '　' +
+                escapeHtml(item.race) +
+                'R' +
+              '</div>' +
+
+            '</div>' +
+
+            '<div>' +
+
+              '<div class="results-hit-type">' +
+                escapeHtml(item.prediction) +
+              '</div>' +
+
+              '<div class="results-hit-payout">' +
+                escapeHtml(item.payout) +
+              '</div>' +
+
+            '</div>' +
+
+          '</div>'
+
+        );
+
+      }).join("");
+
+  }
+
+}
+
+
+function formatResultsDate(dateText) {
+
+  const parts =
+    String(dateText || "").split("-");
+
+  if (parts.length !== 3) {
+    return dateText;
+  }
+
+  return (
+    Number(parts[1]) +
+    "月" +
+    Number(parts[2]) +
+    "日"
+  );
+
+}
+
+
+function formatResultsPeriod(
+  startDate,
+  endDate
+) {
+
+  return (
+    formatResultsDate(startDate) +
+    "～" +
+    formatResultsDate(endDate)
+  );
+
+}
+
+
+function formatResultsRate(value) {
+
+  const number =
+    Number(value);
+
+  if (isNaN(number)) {
+    return String(value || "0.0%");
+  }
+
+  return (
+    number * 100
+  ).toFixed(1) + "%";
+
+}
 
   </script>
 
