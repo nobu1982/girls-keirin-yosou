@@ -4278,9 +4278,30 @@ function openToday() {
          */
 
         document
-          .getElementById("topPage")
-          .style.display = "none";
+  .getElementById("topPage")
+  .style.display = "none";
 
+
+document
+  .getElementById("todayPage")
+  .classList.remove("active");
+
+document
+  .getElementById("schedulePage")
+  .classList.remove("active");
+
+document
+  .getElementById("detailPage")
+  .classList.remove("active");
+
+document
+  .getElementById("predictionDetailPage")
+  .classList.remove("active");
+
+
+document
+  .querySelector(".app")
+  .style.display = "block";
 
         document
           .querySelector(".app")
