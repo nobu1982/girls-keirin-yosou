@@ -4483,9 +4483,9 @@ resultsPage.scrollIntoView({
     results.filter(function(item) {
 
       return (
-        item.startDate < monthEnd &&
-        item.endDate >= monthStart
-      );
+  item.endDate >= monthStart &&
+  item.endDate < monthEnd
+);
 
     });
 
