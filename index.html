@@ -4344,14 +4344,15 @@ document
 
         renderResults();
 
-document.documentElement.scrollTop = 0;
-document.body.scrollTop = 0;
+const resultsPage =
+  document.getElementById("resultsPage");
 
-window.scrollTo({
-  top: 0,
-  left: 0,
-  behavior: "instant"
-});
+if (resultsPage) {
+  resultsPage.scrollIntoView({
+    behavior: "instant",
+    block: "start"
+  });
+}
 
       } catch (error) {
 
