@@ -4857,6 +4857,17 @@ document
     
   </script>
 
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+<script>
+  liff.init({
+    liffId: "2011065900-NOyPbjM0"
+  }).then(() => {
+    console.log("LIFF初期化完了");
+  }).catch((err) => {
+    console.error("LIFF初期化エラー", err);
+  });
+</script>
 
 </body>
 </html>
